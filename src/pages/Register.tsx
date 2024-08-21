@@ -1,7 +1,8 @@
 import { Button, Form, Input, Checkbox,  Row, Col, Typography } from 'antd';
 import { Link } from 'react-router-dom';
-const { Text } = Typography;
 import fire from "../assets/img/fire3d.png";
+
+const { Text } = Typography;
 const Register = () => {
   const onFinish = (values: any) => {
     console.log('Success:', values);
@@ -33,7 +34,7 @@ const Register = () => {
     </Col>
     <Col xs={24} sm={24} md={12} lg={8} xl={6}>
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
-        <h1>Đăng ký trở thành thành viên của Racket Rise</h1>
+        <h1>Đăng ký tài khoản của bạn</h1>
       </div>
       <Form
         name="basic"
@@ -95,7 +96,7 @@ const Register = () => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
           label="Số điện thoại"
           name="phoneNumber"
           rules={[
@@ -107,7 +108,7 @@ const Register = () => {
           ]}
         >
           <Input />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           name="agree"
