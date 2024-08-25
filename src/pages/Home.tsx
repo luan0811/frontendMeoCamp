@@ -1,12 +1,14 @@
-// src/pages/Home.tsx
+
+import BackgroundSection from '../components/HomePage/BackgroundSection';
+import FeaturedProducts from '../components/HomePage/FeaturedProducts';
+
 const Home = () => {
-    return (
-      <div>
-        <h1>Trang Home</h1>
-        <p>Đây là trang chủ của ứng dụng.</p>
-      </div>
-    );
-  };
-  
-  export default Home;
-  
+  return (
+    <div style={{ backgroundColor: '#333', color: '#fff', paddingBottom: '20px' }}>
+      <BackgroundSection />
+      <FeaturedProducts />
+    </div>
+  );
+};
+
+export default Home;
