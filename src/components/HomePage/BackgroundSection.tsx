@@ -26,7 +26,7 @@ const BackgroundSection = () => {
           textAlign: 'center',
         }}
       >
-        <Title style={{ color: '#fff' }}>Chào mùng bạn đến với Meo Camp</Title>
+        <Title style={{ color: '#fff' }}>Chào mừng bạn đến với Meo Camp</Title>
       </div>
     </div>
   );

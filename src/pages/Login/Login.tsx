@@ -10,7 +10,7 @@ import {
   message,
 } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/img/logo_cam.png"
+import logo from "../../assets/img/logo_cam.png"
 
 const { Text } = Typography;
 

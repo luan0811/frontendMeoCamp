@@ -1,6 +1,6 @@
 import { Button, Form, Input, Checkbox,  Row, Col, Typography } from 'antd';
 import { Link } from 'react-router-dom';
-import fire from "../assets/img/fire3d.png";
+import fire from "../../assets/img/fire3d.png";
 
 const { Text } = Typography;
 const Register = () => {

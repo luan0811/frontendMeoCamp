@@ -1,8 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
-import Home from '../pages/Home';
 import Layout from '../components/layouts'; // Import Layout component
+import Login from '../pages/Login/Login';
+import Register from '../pages/Register/Register';
+import Home from '../pages/Home/Home';
+import AboutUs from '../pages/AboutUs/AboutUs';
+
 
 const AppRouter = () => {
   return (
@@ -18,6 +20,14 @@ const AppRouter = () => {
           element={
             <Layout>
               <Home />
+            </Layout>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <Layout>
+              <AboutUs />
             </Layout>
           }
         />
