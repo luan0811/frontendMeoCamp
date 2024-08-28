@@ -1,20 +1,27 @@
 import React from 'react';
 import { Card, Col, Row, Typography, Image } from 'antd';
 import './AboutUs.css';
+import back from '../../assets/img/image 37.png';
 
 const { Title, Paragraph } = Typography;
 
 const AboutUs: React.FC = () => {
   return (
-    <div>
+    <div style={{
+      backgroundImage: `url(${back})`, // Đặt hình ảnh làm backgroundImage
+      backgroundSize: 'cover', // Đảm bảo hình ảnh bao phủ toàn bộ phần tử
+      backgroundPosition: 'center', // Đặt vị trí hình ảnh giữa phần tử
+      backgroundColor: 'black',
+      color: '#fff',
+    }}>
       {/* about us */}
       <div className="about-us-container">
         <Card className="about-us-content">
           <Row gutter={[16, 16]} justify="center">
             <Col xs={24} md={12} className="about-us-text-section">
-              <Title level={2}><strong>Meo Camp</strong></Title>
-              <Title level={1}>Về Chúng Tôi</Title>
-              <Paragraph>
+              <Title style={{color: 'white'}} level={2}><strong>Meo Camp</strong></Title>
+              <Title style={{color: 'white'}} level={1}>Về Chúng Tôi</Title>
+              <Paragraph style={{color: 'white'}}>
                 Chào mừng bạn đến với <strong>Meo Camp</strong>, điểm đến lý tưởng cho những
                 cuộc phiêu lưu ngoài trời! Chúng tôi chuyên cung cấp các loại lều trại
                 chất lượng cao và các sản phẩm du lịch khác để giúp bạn khám phá thiên
@@ -51,8 +58,8 @@ const AboutUs: React.FC = () => {
               />
             </Col>
             <Col xs={24} md={12} className="about-us-text-section">
-              <Title level={1}>Tầm Nhìn</Title>
-              <Paragraph>
+              <Title style={{color: 'white'}} level={1}>Tầm Nhìn</Title>
+              <Paragraph style={{color: 'white'}}>
                 <strong>Meo Camp</strong> hướng tới việc trở thành lựa chọn hàng đầu cho
                 những tín đồ yêu thích cắm trại và du lịch. Chúng tôi muốn cung cấp các sản
                 phẩm và dịch vụ đỉnh cao để mọi cuộc phiêu lưu của bạn đều trở nên dễ
@@ -69,8 +76,8 @@ const AboutUs: React.FC = () => {
         <Card className="about-us-content">
           <Row gutter={[16, 16]} justify="center">
             <Col xs={24} md={12} className="about-us-text-section">
-              <Title level={1}>Sứ Mệnh</Title>
-              <Paragraph>
+              <Title style={{color: 'white'}} level={1}>Sứ Mệnh</Title>
+              <Paragraph style={{color: 'white'}}>
                 Sứ mệnh của chúng tôi là mang đến cho bạn những sản phẩm và dịch vụ du
                 lịch chất lượng nhất, từ những chiếc lều trại bền bỉ đến những phụ kiện
                 tiện ích nhất. Chúng tôi cam kết tạo ra những trải nghiệm cắm trại và
@@ -104,8 +111,8 @@ const AboutUs: React.FC = () => {
               />
             </Col>
             <Col xs={24} md={12} className="about-us-text-section">
-              <Title level={1}>Giá Trị</Title>
-              <Paragraph>
+              <Title style={{color: 'white'}} level={1}>Giá Trị</Title>
+              <Paragraph style={{color: 'white'}}>
                 Tại <strong>Meo Camp</strong>, chúng tôi coi sự tin cậy và chất lượng
                 là ưu tiên hàng đầu. Chúng tôi tin vào việc cung cấp những sản phẩm
                 xuất sắc, dễ sử dụng và bền bỉ, giúp mỗi chuyến cắm trại của bạn

@@ -8,10 +8,11 @@ const BackgroundSection = () => {
   return (
     <div
       style={{
+        backgroundColor: 'black',
         backgroundImage: `url(${pic})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        height: '400px',
+        height: '800px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -20,13 +21,13 @@ const BackgroundSection = () => {
     >
       <div
         style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          // backgroundColor: 'rgba(0, 0, 0, 0.5)',
           padding: '20px 40px',
           borderRadius: '10px',
           textAlign: 'center',
         }}
       >
-        <Title style={{ color: '#fff' }}>Chào mừng bạn đến với Meo Camp</Title>
+        <Title style={{ color: '#fff'}}>Chào mừng bạn đến với Meo Camp</Title>
       </div>
     </div>
   );

@@ -6,7 +6,17 @@ const { Header: AntHeader } = Layout;
 
 const Header = () => {
   return (
-    <AntHeader style={{ background: '#fff', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <AntHeader style={{
+      background: '#fff',
+      padding: '0 20px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      position: 'fixed', // Đặt vị trí cố định
+      top: 0, // Đặt cách mép trên cùng
+      width: '100%', // Chiếm toàn bộ chiều rộng
+      zIndex: 1000, // Đảm bảo header nằm trên các phần tử khác
+    }}>
       <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
         <Link to="/">
           <img src={logo} alt="Logo" style={{ height: 50, marginRight: 20, marginBottom: -20 }} />

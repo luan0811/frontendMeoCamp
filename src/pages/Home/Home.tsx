@@ -6,7 +6,7 @@ import Camera from '../../components/HomePage/Camera';
 
 const Home = () => {
   return (
-    <div style={{ backgroundColor: '#333', color: '#fff', paddingBottom: '20px' }}>
+    <div style={{ color: '#fff', paddingBottom: '20px' }}>
       <BackgroundSection />
       <FeaturedProducts />
       <Tent />

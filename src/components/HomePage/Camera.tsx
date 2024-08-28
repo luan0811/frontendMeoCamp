@@ -1,7 +1,7 @@
 import  { useEffect, useState } from 'react';
 import { Row, Col, Typography, Button, Card, Tag, Space } from 'antd';
 import { getProducts, Product } from '../../services/ProductServices';
-
+import back from '../../assets/img/image 72.png'
 const { Title } = Typography;
 
 const Camera = () => {
@@ -29,7 +29,11 @@ const Camera = () => {
     : products.filter(product => product.type === selectedType).slice(0, 8);
 
   return (
-    <div style={{ padding: '40px 20px', backgroundColor: '#333', color: '#fff' }}>
+    <div style={{ padding: '40px 20px', color: '#fff',
+      backgroundImage: `url(${back})`, // Đặt hình ảnh làm backgroundImage
+      backgroundSize: 'cover', // Đảm bảo hình ảnh bao phủ toàn bộ phần tử
+      backgroundPosition: 'center', // Đặt vị trí hình ảnh giữa phần tử
+      backgroundColor: 'black' }}>
       <Title level={2} style={{ textAlign: 'center', marginBottom: '20px', color:'#fff' }}>Camera</Title>
       <h1 style={{marginTop: -40, paddingBottom: '20px'}}>____________________________________________________________________________________________________________________________</h1>
       <Space size="large" style={{ marginBottom: '20px', justifyContent: 'center', display: 'flex' }}>

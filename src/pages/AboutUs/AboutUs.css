@@ -1,16 +1,19 @@
 .about-us-container {
+  color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px;
-    background-color: #333;
+    /* background-color: #333; */
   }
   
   .about-us-content {
+    color: white;
     max-width: 1200px;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: black;
   }
   
   .about-us-text-section {

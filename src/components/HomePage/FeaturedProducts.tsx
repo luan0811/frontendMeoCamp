@@ -1,8 +1,8 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Row, Col, Typography, Spin } from 'antd';
 import ProductCard from './ProductCard';
 import { getProducts, Product } from '../../services/ProductServices';
-
+import back from '../../assets/img/image 72.png'
 const { Title } = Typography;
 
 const FeaturedProducts = () => {
@@ -25,7 +25,13 @@ const FeaturedProducts = () => {
   }, []);
 
   return (
-    <div style={{ padding: '40px 20px' }}>
+    <div style={{
+      padding: '40px 20px',
+      backgroundImage: `url(${back})`, // Đặt hình ảnh làm backgroundImage
+      backgroundSize: 'cover', // Đảm bảo hình ảnh bao phủ toàn bộ phần tử
+      backgroundPosition: 'center', // Đặt vị trí hình ảnh giữa phần tử
+      backgroundColor: 'black'
+    }}>
       <Title level={2} style={{ textAlign: 'center', marginBottom: '40px', color: '#fff' }}>
         Các sản phẩm nổi bật
       </Title>

@@ -24,7 +24,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, name, rent_price }) =>
         {rent_price} VND/day
       </Text>
       <Button type="primary" style={{ backgroundColor: '#f90', borderColor: '#f90' }}>
-        Order now
+        Xem thêm
       </Button>
     </Card>
   );
