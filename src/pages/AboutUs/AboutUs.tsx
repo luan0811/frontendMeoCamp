@@ -2,6 +2,10 @@ import React from 'react';
 import { Card, Col, Row, Typography, Image } from 'antd';
 import './AboutUs.css';
 import back from '../../assets/img/image 37.png';
+import about1 from '../../assets/img/logo_cam.png';
+import about2 from '../../assets/img/fire3d.png';
+import about3 from '../../assets/img/leu1.png';
+import about4 from '../../assets/img/leu2.png';
 
 const { Title, Paragraph } = Typography;
 
@@ -34,7 +38,7 @@ const AboutUs: React.FC = () => {
             </Col>
             <Col xs={24} md={12} className="about-us-image-section">
               <Image
-                src="src/assets/img/logo_cam.png"
+                src={about1}
                 alt="Camping gear"
                 width="100%"
                 height="auto"
@@ -50,7 +54,7 @@ const AboutUs: React.FC = () => {
           <Row gutter={[16, 16]} justify="center">
             <Col xs={24} md={12} className="about-us-image-section">
               <Image
-                src="src/assets/img/fire3d.png"
+                src={about2}
                 alt="Camping adventure"
                 width="100%"
                 height="auto"
@@ -87,7 +91,7 @@ const AboutUs: React.FC = () => {
             </Col>
             <Col xs={24} md={12} className="about-us-image-section">
               <Image
-                src="src/assets/img/leu1.png"
+                src={about3}
                 alt="Camping gear"
                 width="100%"
                 height="auto"
@@ -103,7 +107,7 @@ const AboutUs: React.FC = () => {
           <Row gutter={[16, 16]} justify="center">
             <Col xs={24} md={12} className="about-us-image-section">
               <Image
-                src="src/assets/img/leu2.png"
+                src={about4}
                 alt="Outdoor adventure"
                 width="100%"
                 height="auto"
