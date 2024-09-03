@@ -21,10 +21,11 @@ const BackgroundSection = () => {
     >
       <div
         style={{
-          // backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          padding: '20px 40px',
-          borderRadius: '10px',
-          textAlign: 'center',
+          color: '#fff',
+          fontFamily: `'Montserrat', sans-serif`, // Or 'Playfair Display', serif
+          fontWeight: '700',
+          fontSize: '48px', // Adjust the size as needed
+          textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', // Optional shadow for extra effect
         }}
       >
         <Title style={{ color: '#fff'}}>Chào mừng bạn đến với Meo Camp</Title>

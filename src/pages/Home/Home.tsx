@@ -2,7 +2,7 @@ import BackgroundSection from '../../components/HomePage/BackgroundSection';
 import FeaturedProducts from '../../components/HomePage/FeaturedProducts';
 import Tent from '../../components/HomePage/Tent';
 import Accessory from '../../components/HomePage/Accessory';
-import Camera from '../../components/HomePage/Camera';
+import Device from '../../components/HomePage/Device';
 
 const Home = () => {
   return (
@@ -11,7 +11,7 @@ const Home = () => {
       <FeaturedProducts />
       <Tent />
       <Accessory />
-      <Camera />
+      <Device />
     </div>
   );
 };

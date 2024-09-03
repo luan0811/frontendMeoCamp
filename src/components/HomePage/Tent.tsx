@@ -36,10 +36,10 @@ const Tent = () => {
       backgroundPosition: 'center', // Đặt vị trí hình ảnh giữa phần tử
       backgroundColor: 'black'
     }}>
-      <Title level={2} style={{ textAlign: 'center', marginBottom: '20px', color: '#fff' }}>Tent</Title>
+      <Title level={2} style={{ textAlign: 'center', marginBottom: '20px', color: '#fff' }}>Lều</Title>
       <h1 style={{ marginTop: -40, paddingBottom: '20px' }}>____________________________________________________________________________________________________________________________</h1>
       <Space size="large" style={{ marginBottom: '20px', justifyContent: 'center', display: 'flex' }}>
-        {['All Products', 'Tent 2 Person', 'Tent 4 Person', 'Mongolian tent', 'Tent 6 Person', 'Tent 8 Person', 'Tent 12 Person'].map(type => (
+        {['Tất cả lều', 'Lều 2 người', 'Lều 4 người', 'Lều 6 người', 'Lều 8 người', 'Lều 12 người'].map(type => (
           <Tag.CheckableTag
             key={type}
             checked={selectedType === type}
@@ -75,9 +75,9 @@ const Tent = () => {
                 <Title level={4} style={{ marginBottom: '10px', color: '#fff' }}>
                   {product.name}
                 </Title>
-                <p style={{ marginBottom: '10px', color: '#fff' }}>{product.rent_price} VND/day</p>
+                <p style={{ marginBottom: '10px', color: '#fff' }}>{product.rent_price} VND/ngày</p>
                 <Button type="primary" style={{ backgroundColor: '#f90', borderColor: '#f90' }}>
-                  Order now
+                  Xem chi tiết
                 </Button>
               </Card>
             </Col>

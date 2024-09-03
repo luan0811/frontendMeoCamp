@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Row, Col, Typography, Button, Card, Tag, Space } from 'antd';
 import { getProducts, Product } from '../../services/ProductServices';
-import back from '../../assets/img/image 32.png'
+import back from '../../assets/img/image 32.png';
+import defaultpic from '../../assets/img/default.jpg';
 
 const { Title } = Typography;
 
@@ -32,15 +33,15 @@ const Accessory = () => {
   return (
     <div style={{
       padding: '40px 20px', color: '#fff',
-      backgroundImage: `url(${back})`, // Đặt hình ảnh làm backgroundImage
-      backgroundSize: 'cover', // Đảm bảo hình ảnh bao phủ toàn bộ phần tử
-      backgroundPosition: 'center', // Đặt vị trí hình ảnh giữa phần tử
+      backgroundImage: `url(${back})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
       backgroundColor: 'black'
     }}>
-      <Title level={2} style={{ textAlign: 'center', marginBottom: '20px', color: '#fff' }}>Accessory</Title>
+      <Title level={2} style={{ textAlign: 'center', marginBottom: '20px', color: '#fff' }}>Phụ kiện</Title>
       <h1 style={{ marginTop: -40, paddingBottom: '20px' }}>____________________________________________________________________________________________________________________________</h1>
       <Space size="large" style={{ marginBottom: '20px', justifyContent: 'center', display: 'flex' }}>
-        {['All Products', 'Bags', 'Gloves', 'Shoes', 'Hats', 'Belts'].map(type => (
+        {['Tất cả phụ kiện', 'Túi', 'Găng tay', 'Giày/Ủng', 'Mũ', 'Đèn pin'].map(type => (
           <Tag.CheckableTag
             key={type}
             checked={selectedType === type}
@@ -69,7 +70,7 @@ const Accessory = () => {
             <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
               <Card
                 hoverable
-                cover={<img alt={product.name} src={product.image} style={{ height: '200px', objectFit: 'cover' }} />}
+                cover={<img alt={product.name} src={product.image ? product.image : defaultpic} style={{ height: '200px', objectFit: 'cover' }} />}
                 style={{ borderRadius: '10px', overflow: 'hidden', backgroundColor: '#444', color: '#fff' }}
                 bodyStyle={{ textAlign: 'center', backgroundColor: '#444', color: '#fff' }}
               >

@@ -1,0 +1,81 @@
+.products-container {
+    display: flex;
+    padding: 45px;
+    background-size: cover;
+    min-height: 100vh;
+    color: #fff;
+  }
+  
+  .product-portfolio {
+    width: 25%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    margin-right: 20px;
+  }
+  
+  .product-portfolio h2 {
+    color: #f90;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .product-portfolio ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .product-portfolio li {
+    color: #fff;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .product-portfolio ul ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .product-list {
+    width: 75%;
+  }
+  .product-portfolio {
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+  }
+  
+  .product-portfolio h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    border-bottom: 2px solid #f90; /* Accent color for the title */
+    padding-bottom: 10px;
+  }
+  
+  .product-portfolio ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .product-portfolio li {
+    font-size: 18px;
+    margin: 10px 0;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions */
+  }
+  
+  .product-portfolio li:hover {
+    background-color: #f90; /* Highlight color on hover */
+    color: #000;
+    transform: translateX(10px); /* Slight movement to the right on hover */
+  }
+  
+  .product-portfolio li.active {
+    background-color: #f90; /* Active state color */
+    color: #000;
+  }
+  

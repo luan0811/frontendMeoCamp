@@ -4,6 +4,7 @@ import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
 import Home from '../pages/Home/Home';
 import AboutUs from '../pages/AboutUs/AboutUs';
+import Products from '../pages/Product/Products';
 
 
 const AppRouter = () => {
@@ -28,6 +29,14 @@ const AppRouter = () => {
           element={
             <Layout>
               <AboutUs />
+            </Layout>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <Layout>
+              <Products />
             </Layout>
           }
         />
