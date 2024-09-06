@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Row, Col, Typography, Button, Card, Tag, Space } from 'antd';
 import { getProducts, Product } from '../../services/ProductServices';
 import back from '../../assets/img/image 6.png'
+import { Link } from 'react-router-dom';
 const { Title } = Typography;
 
 const Tent = () => {
@@ -77,7 +78,7 @@ const Tent = () => {
                 </Title>
                 <p style={{ marginBottom: '10px', color: '#fff' }}>{product.rent_price} VND/ngày</p>
                 <Button type="primary" style={{ backgroundColor: '#f90', borderColor: '#f90' }}>
-                  Xem chi tiết
+                  <Link to={`/product/${product.id}`}>Xem chi tiết</Link>
                 </Button>
               </Card>
             </Col>

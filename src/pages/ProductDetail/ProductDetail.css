@@ -1,0 +1,78 @@
+.product-detail-container {
+    background-color: #1c1c1c;
+    padding: 100px 40px 40px 40px;
+    color: white;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .product-image-gallery {
+    text-align: center;
+  }
+  
+  .main-product-image {
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .product-thumbnail-gallery {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .product-thumbnail {
+    width: 60px;
+    margin-right: 10px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border 0.3s;
+  }
+  
+  .product-thumbnail:hover {
+    border: 2px solid #ff4d4f;
+  }
+  
+  .product-info {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .product-rating {
+    margin-bottom: 20px;
+  }
+  
+  .product-buy-rent {
+    margin-top: 20px;
+  }
+  
+  .price-section {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .add-to-cart-btn {
+    background-color: #ff4d4f;
+    border-color: #ff4d4f;
+    color: white;
+    padding: 0 40px;
+    height: 50px;
+    font-size: 18px;
+    border-radius: 8px;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #e04343;
+  }
+  
+  .product-description {
+    margin-top: 40px;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+  }
+  

@@ -5,7 +5,7 @@ import Register from '../pages/Register/Register';
 import Home from '../pages/Home/Home';
 import AboutUs from '../pages/AboutUs/AboutUs';
 import Products from '../pages/Product/Products';
-
+import ProductDetail from '../pages/ProductDetail/ProductDetail';
 
 const AppRouter = () => {
   return (
@@ -37,6 +37,14 @@ const AppRouter = () => {
           element={
             <Layout>
               <Products />
+            </Layout>
+          }
+        />
+        <Route
+          path="/product/:id"
+          element={
+            <Layout>
+              <ProductDetail />
             </Layout>
           }
         />

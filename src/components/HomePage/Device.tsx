@@ -3,6 +3,7 @@ import { Row, Col, Typography, Button, Card, Tag, Space } from 'antd';
 import { getProducts, Product } from '../../services/ProductServices';
 import back from '../../assets/img/image 72.png'
 import defaultpic from '../../assets/img/default.jpg';
+import { Link } from 'react-router-dom';
 
 const { Title } = Typography;
 
@@ -77,7 +78,7 @@ const Device = () => {
                 </Title>
                 <p style={{ marginBottom: '10px', color: '#fff' }}>{product.rent_price} VND/day</p>
                 <Button type="primary" style={{ backgroundColor: '#f90', borderColor: '#f90' }}>
-                  Order now
+                  <Link to={`/product/${product.id}`} style={{ color: '#fff' }}>Xem chi tiết</Link>
                 </Button>
               </Card>
             </Col>

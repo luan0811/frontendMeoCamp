@@ -1,15 +1,17 @@
 import React from 'react';
 import { Card, Button } from 'antd';
 import Title from 'antd/es/typography/Title';
+import { Link } from 'react-router-dom';
 
 
 interface ProductCardProps {
+  id: string;
   name: string;
   image: string;
   rentPrice: number;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ name, image, rentPrice }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ id,name, image, rentPrice }) => {
   return (
     <Card
       hoverable
@@ -20,9 +22,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, image, rentPrice }) => 
       <Title level={4} style={{ marginBottom: '10px', color: '#fff' }}>
         {name}
       </Title>
-      <p style={{ marginBottom: '10px', color: '#fff' }}>{rentPrice} VND/day</p>
+      <p style={{ marginBottom: '10px', color: '#fff' }}>{rentPrice} VND/ngày</p>
       <Button type="primary" style={{ backgroundColor: '#f90', borderColor: '#f90' }}>
-        Order now
+        <Link to={`/product/${id}`}>Xem chi tiết</Link>
       </Button>
     </Card>
   );

@@ -19,7 +19,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, loading }) => {
       ) : (
         products.map(product => (
           <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
-            <ProductCard name={product.name} image={product.image} rentPrice={product.rent_price} />
+            <ProductCard id={product.id} name={product.name} image={product.image} rentPrice={product.rent_price} />
           </Col>
         ))
       )}

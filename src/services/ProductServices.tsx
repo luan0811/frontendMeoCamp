@@ -12,6 +12,7 @@ export interface Product {
   quantity: number;
   size: string;
   rate: number;
+  des: string;
 }
 
 export const getProducts = async (): Promise<Product[]> => {
@@ -21,5 +22,16 @@ export const getProducts = async (): Promise<Product[]> => {
   } catch (error) {
     console.error('Error fetching products:', error);
     return [];
+  }
+};
+
+// New function to get a product by its ID
+export const getProductById = async (id: string): Promise<Product | null> => {
+  try {
+    const response = await axios.get<Product>(`${API_BASE_URL}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching product with id ${id}:`, error);
+    return null;
   }
 };
