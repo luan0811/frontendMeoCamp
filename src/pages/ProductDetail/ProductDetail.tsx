@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Rate, Radio, Typography, Row, Col } from 'antd';
 import { getProductById, Product } from '../../services/ProductServices';
