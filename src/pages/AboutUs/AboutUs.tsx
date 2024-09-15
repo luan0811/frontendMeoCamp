@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Col, Row, Typography, Image } from 'antd';
 import './AboutUs.css';
-import back from '../../assets/img/image 37.png';
+import back from '../../assets/img/image 37_LE_auto_custom.jpg';
 import about1 from '../../assets/img/logo_cam.png';
 import about2 from '../../assets/img/fire3d.png';
 import about3 from '../../assets/img/leu1.png';

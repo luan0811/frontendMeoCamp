@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Typography, Button, Card, Tag, Space } from 'antd';
+import { Row, Col, Typography, Button, Card, Tag, Space, Skeleton } from 'antd';
 import { getProducts, Product } from '../../services/ProductServices';
-import back from '../../assets/img/image 6.png'
+import back from '../../assets/img/image 6.png';
+import defaultpic from '../../assets/img/default.jpg';
 import { Link } from 'react-router-dom';
+
 const { Title } = Typography;
 
 const Tent = () => {
@@ -25,16 +27,16 @@ const Tent = () => {
   };
 
   // Filter products where the type is "Tent" and limit to 8 cards
-  const filteredProducts = selectedType === 'All Products'
+  const filteredProducts = selectedType === 'All Products' || selectedType === 'Tất cả lều'
     ? products.filter(product => product.type === 'Tent').slice(0, 8)
     : products.filter(product => product.type === selectedType).slice(0, 8);
 
   return (
     <div style={{
       padding: '40px 20px', color: '#fff',
-      backgroundImage: `url(${back})`, // Đặt hình ảnh làm backgroundImage
-      backgroundSize: 'cover', // Đảm bảo hình ảnh bao phủ toàn bộ phần tử
-      backgroundPosition: 'center', // Đặt vị trí hình ảnh giữa phần tử
+      backgroundImage: `url(${back})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
       backgroundColor: 'black'
     }}>
       <Title level={2} style={{ textAlign: 'center', marginBottom: '20px', color: '#fff' }}>Lều</Title>
@@ -59,17 +61,24 @@ const Tent = () => {
         ))}
       </Space>
 
-      {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
-          <p>Loading...</p>
-        </div>
-      ) : (
-        <Row gutter={[16, 16]} justify="center">
-          {filteredProducts.map(product => (
+      <Row gutter={[16, 16]} justify="center">
+        {loading
+          ? Array.from({ length: 8 }).map((_, index) => (
+            <Col key={index} xs={24} sm={12} md={8} lg={6}>
+              <Card
+                cover={<Skeleton.Image style={{ height: '200px' }} />}
+                style={{ borderRadius: '10px', overflow: 'hidden', backgroundColor: '#444', color: '#fff' }}
+                bodyStyle={{ textAlign: 'center', backgroundColor: '#444', color: '#fff' }}
+              >
+                <Skeleton active />
+              </Card>
+            </Col>
+          ))
+          : filteredProducts.map(product => (
             <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
               <Card
                 hoverable
-                cover={<img alt={product.name} src={product.image} style={{ height: '200px', objectFit: 'cover' }} />}
+                cover={<img alt={product.name} src={Array.isArray(product.image) ? product.image[0] : product.image || defaultpic} style={{ height: '200px', objectFit: 'cover' }} />}
                 style={{ borderRadius: '10px', overflow: 'hidden', backgroundColor: '#444', color: '#fff' }}
                 bodyStyle={{ textAlign: 'center', backgroundColor: '#444', color: '#fff' }}
               >
@@ -78,13 +87,12 @@ const Tent = () => {
                 </Title>
                 <p style={{ marginBottom: '10px', color: '#fff' }}>{product.rent_price} VND/ngày</p>
                 <Button type="primary" style={{ backgroundColor: '#f90', borderColor: '#f90' }}>
-                  <Link to={`/product/${product.id}`}>Xem chi tiết</Link>
+                  <Link to={`/product/${product.id}`} style={{ color: '#fff' }}>Xem chi tiết</Link>
                 </Button>
               </Card>
             </Col>
           ))}
-        </Row>
-      )}
+      </Row>
     </div>
   );
 };

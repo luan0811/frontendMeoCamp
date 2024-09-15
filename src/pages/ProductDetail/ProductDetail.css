@@ -11,27 +11,35 @@
   }
   
   .main-product-image {
-    width: 100%;
+    width: 500px;
+    max-width: 500px; /* Set a maximum width */
+    height: 280px; /* Maintain aspect ratio */
     border-radius: 10px;
+    object-fit: contain; /* Ensure the image is scaled within the box */
   }
   
-  .product-thumbnail-gallery {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
+  
+  .product-image-gallery {
+    text-align: center;
+    max-width: 500px; /* Set a maximum width for the gallery */
+    margin: auto; /* Center the gallery */
   }
+  
   
   .product-thumbnail {
     width: 60px;
+    height: 60px; /* Maintain a square ratio */
     margin-right: 10px;
     cursor: pointer;
     border: 2px solid transparent;
-    transition: border 0.3s;
+    transition: border 0.3s, transform 0.3s;
   }
   
   .product-thumbnail:hover {
     border: 2px solid #ff4d4f;
+    transform: scale(1.1); /* Slight zoom effect on hover */
   }
+  
   
   .product-info {
     background-color: white;

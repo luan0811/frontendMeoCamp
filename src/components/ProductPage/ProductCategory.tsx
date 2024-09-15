@@ -1,1 +1,1 @@
-export type ProductCategory = 'All' | 'Tent' | 'Accessory' | 'Device' | 'Other';
+export type ProductCategory = 'All' | 'Tent' | 'Accessory' | 'Equipment' | 'Other';

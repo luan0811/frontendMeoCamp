@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Typography, Button, Card, Tag, Space } from 'antd';
+import { Row, Col, Typography, Button, Card, Tag, Space, Skeleton } from 'antd';
 import { getProducts, Product } from '../../services/ProductServices';
 import back from '../../assets/img/image 32.png';
 import defaultpic from '../../assets/img/default.jpg';
@@ -27,7 +27,7 @@ const Accessory = () => {
   };
 
   // Filter products where the type is "Accessory" and limit to 8 cards
-  const filteredProducts = selectedType === 'All Products'
+  const filteredProducts = selectedType === 'All Products' || selectedType === 'Tất cả phụ kiện'
     ? products.filter(product => product.type === 'Accessory').slice(0, 8)
     : products.filter(product => product.type === selectedType).slice(0, 8);
 
@@ -61,32 +61,38 @@ const Accessory = () => {
         ))}
       </Space>
 
-      {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
-          <p>Loading...</p>
-        </div>
-      ) : (
-        <Row gutter={[16, 16]} justify="center">
-          {filteredProducts.map(product => (
+      <Row gutter={[16, 16]} justify="center">
+        {loading
+          ? Array.from({ length: 8 }).map((_, index) => (
+            <Col key={index} xs={24} sm={12} md={8} lg={6}>
+              <Card
+                cover={<Skeleton.Image style={{ height: '200px' }} />}
+                style={{ borderRadius: '10px', overflow: 'hidden', backgroundColor: '#444', color: '#fff' }}
+                bodyStyle={{ textAlign: 'center', backgroundColor: '#444', color: '#fff' }}
+              >
+                <Skeleton active />
+              </Card>
+            </Col>
+          ))
+          : filteredProducts.map(product => (
             <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
               <Card
                 hoverable
-                cover={<img alt={product.name} src={product.image ? product.image : defaultpic} style={{ height: '200px', objectFit: 'cover' }} />}
+                cover={<img alt={product.name} src={Array.isArray(product.image) ? product.image[0] : product.image || defaultpic} style={{ height: '200px', objectFit: 'cover' }} />}
                 style={{ borderRadius: '10px', overflow: 'hidden', backgroundColor: '#444', color: '#fff' }}
                 bodyStyle={{ textAlign: 'center', backgroundColor: '#444', color: '#fff' }}
               >
                 <Title level={4} style={{ marginBottom: '10px', color: '#fff' }}>
                   {product.name}
                 </Title>
-                <p style={{ marginBottom: '10px', color: '#fff' }}>{product.rent_price} VND/day</p>
+                <p style={{ marginBottom: '10px', color: '#fff' }}>{product.rent_price} VND/ngày</p>
                 <Button type="primary" style={{ backgroundColor: '#f90', borderColor: '#f90' }}>
-                 <Link to={`/product/${product.id}`}>Xem chi tiết</Link>
+                  <Link to={`/product/${product.id}`} style={{ color: '#fff' }}>Xem chi tiết</Link>
                 </Button>
               </Card>
             </Col>
           ))}
-        </Row>
-      )}
+      </Row>
     </div>
   );
 };

@@ -43,7 +43,7 @@ const FeaturedProducts = () => {
         <Row gutter={[16, 16]} justify="center">
           {products.map((product) => (
             <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
-              <ProductCard id={product.id} image={product.image} name={product.name} rent_price={product.rent_price} />
+              <ProductCard id={product.id} image={product.image[0]} name={product.name} rent_price={product.rent_price} />
             </Col>
           ))}
         </Row>

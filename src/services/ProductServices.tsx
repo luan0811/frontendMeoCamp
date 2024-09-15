@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export interface Product {
   id: string;
   name: string;
-  image: string;
+  image: Array<string>;
   rent_price: number;
   purchase_price: number;
   type: string;

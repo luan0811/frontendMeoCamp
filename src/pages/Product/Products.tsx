@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getProducts, Product } from '../../services/ProductServices';
-import { Pagination, Input } from 'antd';
+import { Pagination, Input, Skeleton } from 'antd';
 import Title from 'antd/es/typography/Title';
 import ProductPortfolio from '../../components/ProductPage/ProductPortfolio';
 import ProductList from '../../components/ProductPage/ProductList';
@@ -19,10 +19,11 @@ const Products = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true); // Start loading
       const fetchedProducts = await getProducts();
       setProducts(fetchedProducts);
       setFilteredProducts(fetchedProducts);
-      setLoading(false);
+      setLoading(false); // Stop loading when products are fetched
     };
 
     fetchProducts();
@@ -81,7 +82,7 @@ const Products = () => {
           onSearch={handleSearch}
           style={{ marginBottom: '20px' }}
         />
-        <ProductList products={currentProducts} loading={loading} />
+        <ProductList products={currentProducts} loading={loading} /> {/* Pass the loading prop */}
         <Pagination
           current={currentPage}
           pageSize={productsPerPage}
