@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getProducts, Product } from '../../services/ProductServices';
-import { Pagination, Input, Skeleton } from 'antd';
+import { Pagination, Input } from 'antd';
 import Title from 'antd/es/typography/Title';
 import ProductPortfolio from '../../components/ProductPage/ProductPortfolio';
 import ProductList from '../../components/ProductPage/ProductList';
