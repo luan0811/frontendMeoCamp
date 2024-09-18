@@ -4,15 +4,21 @@ import Tent from '../../components/HomePage/Tent';
 import Accessory from '../../components/HomePage/Accessory';
 import Device from '../../components/HomePage/Device';
 
+import { Layout } from 'antd';
+
+const { Content } = Layout;
+
 const Home = () => {
   return (
-    <div style={{ color: '#fff', paddingBottom: '20px' }}>
-      <BackgroundSection />
-      <FeaturedProducts />
-      <Tent />
-      <Accessory />
-      <Device />
-    </div>
+    <Layout style={{ background: 'transparent' }}>
+      <Content>
+        <BackgroundSection />
+        <FeaturedProducts />
+        <Tent />
+        <Accessory />
+        <Device />
+      </Content>
+    </Layout>
   );
 };
 

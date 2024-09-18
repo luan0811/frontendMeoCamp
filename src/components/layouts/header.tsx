@@ -1,10 +1,19 @@
+import { useState, useEffect } from 'react';
 import { Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/img/logo_cam.png';
+import avatar from '../../assets/img/avt.png';
 
 const { Header: AntHeader } = Layout;
 
 const Header = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    setIsLoggedIn(loggedIn);
+  }, []);
+
   return (
     <AntHeader style={{
       background: '#fff',
@@ -41,14 +50,18 @@ const Header = () => {
         </Menu>
       </div>
       <div style={{ display: 'flex' }}>
-        <Menu mode="horizontal">
-          <Menu.Item key="6">
-            <Link to="/login">Đăng nhập</Link>
-          </Menu.Item>
-          <Menu.Item key="7">
-            <Link to="/register">Đăng ký</Link>
-          </Menu.Item>
-        </Menu>
+        {isLoggedIn ? (
+          <img src={avatar} alt="User Avatar" style={{ width: 32, height: 32, borderRadius: '50%' }} />
+        ) : (
+          <Menu mode="horizontal">
+            <Menu.Item key="6">
+              <Link to="/login">Đăng nhập</Link>
+            </Menu.Item>
+            <Menu.Item key="7">
+              <Link to="/register">Đăng ký</Link>
+            </Menu.Item>
+          </Menu>
+        )}
       </div>
     </AntHeader>
   );

@@ -48,8 +48,16 @@ const Register = () => {
       >
         <Form.Item
           label="Họ và tên"
+          name="fullname"
+          rules={[{ required: true, message: "Hãy nhập họ và tên của bạn" }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Tên đăng nhập"
           name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
+          rules={[{ required: true, message: "Hãy nhập tên đăng nhập" }]}
         >
           <Input />
         </Form.Item>
@@ -58,8 +66,8 @@ const Register = () => {
           label="Email"
           name="email"
           rules={[
-            { type: "email", message: "The input is not valid E-mail!" },
-            { required: true, message: "Please input your email!" },
+            { type: "email", message: "Phải nhập đúng định dạng email" },
+            { required: true, message: "Hãy nhập email của bạn" },
           ]}
         >
           <Input />
@@ -68,7 +76,7 @@ const Register = () => {
         <Form.Item
           label="Mật khẩu"
           name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
+          rules={[{ required: true, message: "Hãy nhập mật khẩu của bạn" }]}
         >
           <Input.Password />
         </Form.Item>
@@ -78,7 +86,7 @@ const Register = () => {
           name="confirmPassword"
           dependencies={["password"]}
           rules={[
-            { required: true, message: "Please confirm your password!" },
+            { required: true, message: "Hãy nhập lại mật khẩu của bạn" },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 if (!value || getFieldValue("password") === value) {
@@ -86,7 +94,7 @@ const Register = () => {
                 }
                 return Promise.reject(
                   new Error(
-                    "The two passwords that you entered do not match!"
+                    "Hai mật khẩu bạn nhập không khớp!"
                   )
                 );
               },
@@ -117,7 +125,7 @@ const Register = () => {
           rules={[
             {
               required: true,
-              message: "Please agree to terms and conditions!",
+              message: "Hãy đồng ý với các điều khoản",
             },
           ]}
         >

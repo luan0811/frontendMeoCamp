@@ -15,19 +15,13 @@ const AppRouter = () => {
         <Route
           path="/login"
           element={
-            <Layout>
-              {" "}
-              <Login />
-            </Layout>
+            <Login />
           }
         />
         <Route
           path="/register"
           element={
-            <Layout>
-              {" "}
-              <Register />
-            </Layout>
+            <Register />
           }
         />
 

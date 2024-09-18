@@ -15,19 +15,24 @@ import logo from "../../assets/img/logo_cam.png"
 const { Text } = Typography;
 
 interface LoginFormValues {
-  email: string;
+  username: string;
   password: string;
   remember?: boolean;
 }
 
 const Login: React.FC = () => {
+
   const [registerClicked, setRegisterClicked] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const onFinish = (values: LoginFormValues) => {
-    console.log("Success:", values);
-    message.success("Đăng nhập thành công!");
-    navigate("/home");
+    if (values.username === "luan" && values.password === "123") {
+      message.success("Đăng nhập thành công!");
+      localStorage.setItem("isLoggedIn", "true");
+      navigate("/home");
+    } else {
+      message.error("Tên đăng nhập hoặc mật khẩu không đúng!");
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -69,12 +74,12 @@ const Login: React.FC = () => {
           style={{ maxWidth: 400, margin: "auto" }}
         >
           <Form.Item
-            label="Email"
-            name="email"
+            label="Tên đăng nhập"
+            name="username"
             rules={[
               {
                 required: registerClicked,
-                message: "Vui lòng nhập email!",
+                message: "Hãy nhập tên đăng nhập của bạn",
               },
             ]}
           >
@@ -87,7 +92,7 @@ const Login: React.FC = () => {
             rules={[
               {
                 required: registerClicked,
-                message: "Vui lòng nhập mật khẩu!",
+                message: "Hãy nhập mật khẩu của bạn",
               },
             ]}
           >
@@ -99,7 +104,7 @@ const Login: React.FC = () => {
             valuePropName="checked"
             wrapperCol={{ offset: 8, span: 16 }}
           >
-            <Checkbox>Remember me</Checkbox>
+            <Checkbox>Nhớ mật khẩu</Checkbox>
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -119,6 +124,7 @@ const Login: React.FC = () => {
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Link to="/forgot-password">Quên mật khẩu?</Link>
           </Form.Item>
         </Form>
         <div style={{ textAlign: "center" }}>
