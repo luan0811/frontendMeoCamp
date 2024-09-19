@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Badge } from 'antd';
 import { Link } from 'react-router-dom';
+import { ShoppingCartOutlined } from '@ant-design/icons';
 import logo from '../../assets/img/logo_cam.png';
 import avatar from '../../assets/img/avt.png';
 
@@ -49,7 +50,12 @@ const Header = () => {
           {/* Add more Menu.Item as needed */}
         </Menu>
       </div>
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Link to="/cart" style={{ marginRight: '16px' }}>
+          <Badge count={5}>
+            <ShoppingCartOutlined style={{ fontSize: '24px', color: '#1890ff' }} />
+          </Badge>
+        </Link>
         {isLoggedIn ? (
           <img src={avatar} alt="User Avatar" style={{ width: 32, height: 32, borderRadius: '50%' }} />
         ) : (

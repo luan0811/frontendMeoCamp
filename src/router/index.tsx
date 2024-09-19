@@ -6,7 +6,7 @@ import Home from "../pages/Home/Home";
 import AboutUs from "../pages/AboutUs/AboutUs";
 import Products from "../pages/Product/Products";
 import ProductDetail from "../pages/ProductDetail/ProductDetail";
-
+import Cart from "../pages/Cart/Cart";
 const AppRouter = () => {
   return (
     <Router>
@@ -55,6 +55,14 @@ const AppRouter = () => {
           element={
             <Layout>
               <ProductDetail />
+            </Layout>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <Layout>
+              <Cart />
             </Layout>
           }
         />
