@@ -1,16 +1,8 @@
-import React, {  useState } from "react";
-import {
-  Button,
-  Checkbox,
-  Form,
-  Input,
-  Row,
-  Col,
-  Typography,
-  message,
-} from "antd";
+import React, { useState } from "react";
+import { Button, Checkbox, Form, Input, Row, Col, Typography, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/img/logo_cam.png"
+import logo from "../../assets/img/logo_cam.png";
+import { loginUser } from "../../services/AuthServices";
 
 const { Text } = Typography;
 
@@ -21,16 +13,20 @@ interface LoginFormValues {
 }
 
 const Login: React.FC = () => {
-
   const [registerClicked, setRegisterClicked] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const onFinish = (values: LoginFormValues) => {
-    if (values.username === "luan" && values.password === "123") {
+  const onFinish = async (values: LoginFormValues) => {
+    try {
+      const response = await loginUser(values);
       message.success("Đăng nhập thành công!");
+      
+      // Lưu username và trạng thái đăng nhập vào localStorage
       localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("username", values.username); // Lưu tên người dùng
+      
       navigate("/home");
-    } else {
+    } catch (error) {
       message.error("Tên đăng nhập hoặc mật khẩu không đúng!");
     }
   };

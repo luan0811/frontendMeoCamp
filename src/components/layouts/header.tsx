@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Layout, Menu, Badge } from 'antd';
+import { Layout, Menu, Badge, Dropdown, Menu as AntMenu } from 'antd';
 import { Link } from 'react-router-dom';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import logo from '../../assets/img/logo_cam.png';
@@ -9,11 +9,31 @@ const { Header: AntHeader } = Layout;
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const storedUsername = localStorage.getItem('username');
+    
     setIsLoggedIn(loggedIn);
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
   }, []);
+
+  const handleMenuClick = (e: any) => {
+    if (e.key === 'logout') {
+      localStorage.clear();
+      window.location.reload();
+    }
+  };
+
+  const menu = (
+    <AntMenu onClick={handleMenuClick}>
+      <AntMenu.Item key="account">Thông tin tài khoản</AntMenu.Item>
+      <AntMenu.Item key="logout">Đăng xuất</AntMenu.Item>
+    </AntMenu>
+  );
 
   return (
     <AntHeader style={{
@@ -22,10 +42,10 @@ const Header = () => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      position: 'fixed', // Đặt vị trí cố định
-      top: 0, // Đặt cách mép trên cùng
-      width: '100%', // Chiếm toàn bộ chiều rộng
-      zIndex: 1000, // Đảm bảo header nằm trên các phần tử khác
+      position: 'fixed', 
+      top: 0, 
+      width: '100%', 
+      zIndex: 1000, 
     }}>
       <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
         <Link to="/">
@@ -47,26 +67,32 @@ const Header = () => {
           <Menu.Item key="5">
             <Link to="/blogs">Blogs</Link>
           </Menu.Item>
-          {/* Add more Menu.Item as needed */}
         </Menu>
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Link to="/cart" style={{ marginRight: '16px' }}>
-          <Badge count={5}>
-            <ShoppingCartOutlined style={{ fontSize: '24px', color: '#1890ff' }} />
-          </Badge>
-        </Link>
+        {isLoggedIn && (
+          <Link to="/cart" style={{ marginRight: '16px' }}>
+            <Badge count={5}>
+              <ShoppingCartOutlined style={{ fontSize: '24px', color: '#1890ff' }} />
+            </Badge>
+          </Link>
+        )}
         {isLoggedIn ? (
-          <img src={avatar} alt="User Avatar" style={{ width: 32, height: 32, borderRadius: '50%' }} />
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span style={{ marginRight: '16px' }}>Xin chào, {username}</span>
+            <Dropdown overlay={menu} trigger={['click']}>
+              <img src={avatar} alt="User Avatar" style={{ width: 32, height: 32, borderRadius: '50%', cursor: 'pointer' }} />
+            </Dropdown>
+          </div>
         ) : (
-          <Menu mode="horizontal">
-            <Menu.Item key="6">
+          <AntMenu mode="horizontal">
+            <AntMenu.Item key="6">
               <Link to="/login">Đăng nhập</Link>
-            </Menu.Item>
-            <Menu.Item key="7">
+            </AntMenu.Item>
+            <AntMenu.Item key="7">
               <Link to="/register">Đăng ký</Link>
-            </Menu.Item>
-          </Menu>
+            </AntMenu.Item>
+          </AntMenu>
         )}
       </div>
     </AntHeader>
