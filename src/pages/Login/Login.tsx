@@ -18,7 +18,7 @@ const Login: React.FC = () => {
 
   const onFinish = async (values: LoginFormValues) => {
     try {
-      const response = await loginUser(values);
+      await loginUser(values);
       message.success("Đăng nhập thành công!");
       
       // Lưu username và trạng thái đăng nhập vào localStorage
