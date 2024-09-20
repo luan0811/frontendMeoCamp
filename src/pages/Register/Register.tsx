@@ -10,7 +10,7 @@ const Register = () => {
 
   const onFinish = async (values: any) => {
     try {
-      const data = await registerUser(values); // Gọi service đăng ký
+      await registerUser(values); // Gọi service đăng ký
       message.success("Đăng ký thành công!"); // Hiển thị thông báo thành công
       navigate("/login"); // Điều hướng về trang đăng nhập
     } catch (error) {
