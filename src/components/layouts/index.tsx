@@ -13,7 +13,8 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <AntLayout style={{ minHeight: '100vh' }}>
       <Header />
-      <Content style={{ padding: '20px' }}>{children}</Content>
+      {/* <Content style={{ padding: '20px' }}>{children}</Content> */}
+      <Content>{children}</Content>
       <Footer />
     </AntLayout>
   );

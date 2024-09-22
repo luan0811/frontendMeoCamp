@@ -18,13 +18,13 @@ const Login: React.FC = () => {
 
   const onFinish = async (values: LoginFormValues) => {
     try {
-      await loginUser(values);
+     const user = await loginUser(values);
       message.success("Đăng nhập thành công!");
-      
+
       // Lưu username và trạng thái đăng nhập vào localStorage
       localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("username", values.username); // Lưu tên người dùng
-      
+      // localStorage.setItem("username", values.username); // Lưu tên người dùng
+      localStorage.setItem('user', JSON.stringify(user));
       navigate("/home");
     } catch (error) {
       message.error("Tên đăng nhập hoặc mật khẩu không đúng!");

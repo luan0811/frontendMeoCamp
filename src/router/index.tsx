@@ -7,23 +7,14 @@ import AboutUs from "../pages/AboutUs/AboutUs";
 import Products from "../pages/Product/Products";
 import ProductDetail from "../pages/ProductDetail/ProductDetail";
 import Cart from "../pages/Cart/Cart";
+import ContactUs from "../pages/ContactUs/ContactUs";
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
         {/* Các trang không có Layout */}
-        <Route
-          path="/login"
-          element={
-            <Login />
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <Register />
-          }
-        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
         {/* Các trang có Layout */}
         <Route
@@ -66,7 +57,14 @@ const AppRouter = () => {
             </Layout>
           }
         />
-
+        <Route
+          path="/contact"
+          element={
+            <Layout>
+              <ContactUs />
+            </Layout>
+          }
+        />
         {/* Đường dẫn không xác định, chuyển hướng về Home */}
         <Route
           path="*"

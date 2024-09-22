@@ -13,11 +13,19 @@ const Header = () => {
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
-    const storedUsername = localStorage.getItem('username');
+    const storedUser = localStorage.getItem('user');
     
-    setIsLoggedIn(loggedIn);
-    if (storedUsername) {
-      setUsername(storedUsername);
+    try {
+      const user = storedUser ? JSON.parse(storedUser) : null; // Check if storedUser is not null
+      console.log('user', user);
+      setIsLoggedIn(loggedIn);
+      if (user) {
+        setUsername(user.username);
+      }
+    } catch (error) {
+      console.error('Error parsing user data:', error);
+      // Handle the error, e.g., clear invalid data or set defaults
+      localStorage.removeItem('user');
     }
   }, []);
 
