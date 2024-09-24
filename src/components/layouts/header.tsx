@@ -38,7 +38,9 @@ const Header = () => {
 
   const menu = (
     <AntMenu onClick={handleMenuClick}>
-      <AntMenu.Item key="account">Thông tin tài khoản</AntMenu.Item>
+      <AntMenu.Item key="profile">
+        <Link to="/profile">Thông tin tài khoản</Link>
+      </AntMenu.Item>
       <AntMenu.Item key="logout">Đăng xuất</AntMenu.Item>
     </AntMenu>
   );
