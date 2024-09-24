@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getProducts, Product } from '../../services/ProductServices';
+import { getAllProduct, Product1 } from '../../services/ProductServices'; // Use real API function
 import { Pagination, Input } from 'antd';
 import Title from 'antd/es/typography/Title';
 import ProductPortfolio from '../../components/ProductPage/ProductPortfolio';
@@ -11,8 +11,8 @@ import back from '../../assets/img/product.png'; // Background image
 const { Search } = Input;
 
 const Products = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product1[]>([]); // Adjusted to use Product1 type
+  const [filteredProducts, setFilteredProducts] = useState<Product1[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 12; // Number of products to display per page
@@ -20,10 +20,15 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true); // Start loading
-      const fetchedProducts = await getProducts();
-      setProducts(fetchedProducts);
-      setFilteredProducts(fetchedProducts);
-      setLoading(false); // Stop loading when products are fetched
+      try {
+        const fetchedProducts = await getAllProduct(); // Fetch real data
+        setProducts(fetchedProducts);
+        setFilteredProducts(fetchedProducts);
+      } catch (error) {
+        console.error('Error fetching products', error);
+      } finally {
+        setLoading(false); // Stop loading when products are fetched
+      }
     };
 
     fetchProducts();
@@ -40,7 +45,7 @@ const Products = () => {
   const handleSearch = (value: string) => {
     const normalizedValue = normalizeText(value.toLowerCase());
     const filtered = products.filter(product =>
-      normalizeText(product.name.toLowerCase()).includes(normalizedValue)
+      normalizeText(product.productName.toLowerCase()).includes(normalizedValue)
     );
     setFilteredProducts(filtered);
     setCurrentPage(1); // Reset to first page after search
@@ -48,8 +53,8 @@ const Products = () => {
 
   const handleCategorySelect = (type: string) => {
     const filtered = type === 'others'
-      ? products.filter(product => !['tent', 'accessory', 'equipment'].includes(product.type))
-      : products.filter(product => product.type === type);
+      ? products.filter(product => !['tent', 'accessory', 'equipment'].includes(product.categoryId.toString()))
+      : products.filter(product => product.categoryId.toString() === type);
     setFilteredProducts(filtered);
     setCurrentPage(1);
   };
@@ -82,7 +87,7 @@ const Products = () => {
           onSearch={handleSearch}
           style={{ marginBottom: '20px' }}
         />
-        <ProductList products={currentProducts} loading={loading} /> {/* Pass the loading prop */}
+        <ProductList products={currentProducts} loading={loading} />
         <Pagination
           current={currentPage}
           pageSize={productsPerPage}

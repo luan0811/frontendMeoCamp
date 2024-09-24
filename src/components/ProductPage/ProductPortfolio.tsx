@@ -9,9 +9,9 @@ const ProductPortfolio: React.FC<ProductPortfolioProps> = ({ onSelectCategory })
     <div className="product-portfolio">
       <h2>Danh mục sản phẩm</h2>
       <ul>
-        <li onClick={() => onSelectCategory('Tent')}>Lều</li>
-        <li onClick={() => onSelectCategory('Accessory')}>Phụ kiện</li>
-        <li onClick={() => onSelectCategory('Equipment')}>Trang bị</li>
+        <li onClick={() => onSelectCategory('1')}>Lều</li>
+        <li onClick={() => onSelectCategory('2')}>Phụ kiện</li>
+        <li onClick={() => onSelectCategory('3')}>Trang bị</li>
         <li onClick={() => onSelectCategory('others')}>Các sản phẩm còn lại</li>
       </ul>
     </div>
