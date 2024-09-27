@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Row, Col, Typography, Spin } from 'antd';
 import ProductCard from './ProductCard';
-import { getProducts, Product } from '../../services/ProductServices';
+import { getAllProduct, Product1 } from '../../services/ProductServices';
 import back from '../../assets/img/image 72.png'
 const { Title } = Typography;
 
 const FeaturedProducts = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product1[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const fetchedProducts = await getProducts();
+      const fetchedProducts = await getAllProduct();
       const topRatedProducts = fetchedProducts
         .sort((a, b) => b.rate - a.rate)
         .slice(0, 3);
@@ -57,7 +57,7 @@ const FeaturedProducts = () => {
         <Row gutter={[32, 32]} justify="center">
           {products.map((product) => (
             <Col key={product.id} xs={24} sm={12} md={8} lg={8}>
-              <ProductCard id={product.id} image={product.image[0]} name={product.name} rent_price={product.rent_price} />
+              <ProductCard id={product.id} image={product.image[0]} name={product.productName} rent_price={product.rentalPrice} />
             </Col>
           ))}
         </Row>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Row, Col, Typography, Button, Card, Tag, Space, Skeleton } from 'antd';
-import { getProducts, Product } from '../../services/ProductServices';
+import { getAllProduct, Product1 } from '../../services/ProductServices';
 import back from '../../assets/img/image 32.png';
 import defaultpic from '../../assets/img/default.jpg';
 import { Link } from 'react-router-dom';
@@ -8,13 +8,13 @@ import { Link } from 'react-router-dom';
 const { Title } = Typography;
 
 const Accessory = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product1[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedType, setSelectedType] = useState<string>('All Products');
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const fetchedProducts = await getProducts();
+      const fetchedProducts = await getAllProduct();
       setProducts(fetchedProducts);
       setLoading(false);
     };
@@ -28,8 +28,8 @@ const Accessory = () => {
 
   // Filter products where the type is "Accessory" and limit to 8 cards
   const filteredProducts = selectedType === 'All Products' || selectedType === 'Tất cả phụ kiện'
-    ? products.filter(product => product.type === 'Accessory').slice(0, 8)
-    : products.filter(product => product.type === selectedType).slice(0, 8);
+    ? products.filter(product => product.categoryId === 3).slice(0, 8)
+    : products.filter(product => product.categoryId === parseInt(selectedType)).slice(0, 8);
 
   return (
     <div style={{
@@ -91,7 +91,7 @@ const Accessory = () => {
             <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
               <Card
                 hoverable
-                cover={<img alt={product.name} src={Array.isArray(product.image) ? product.image[0] : product.image || defaultpic} style={{ height: '250px', objectFit: 'cover' }} />}
+                cover={<img alt={product.productName} src={Array.isArray(product.image) ? product.image[0] : product.image || defaultpic} style={{ height: '250px', objectFit: 'cover' }} />}
                 style={{
                   borderRadius: '15px',
                   overflow: 'hidden',
@@ -103,9 +103,9 @@ const Accessory = () => {
                 bodyStyle={{ textAlign: 'center', backgroundColor: 'transparent', color: '#fff', padding: '20px' }}
               >
                 <Title level={4} style={{ marginBottom: '10px', color: '#fff', fontSize: '1.2rem' }}>
-                  {product.name}
+                  {product.productName}
                 </Title>
-                <p style={{ marginBottom: '15px', color: '#f90', fontSize: '1.1rem', fontWeight: 'bold' }}>{product.rent_price} VND/ngày</p>
+                <p style={{ marginBottom: '15px', color: '#f90', fontSize: '1.1rem', fontWeight: 'bold' }}>{product.rentalPrice} VND/ngày</p>
                 <Button type="primary" style={{ backgroundColor: '#f90', borderColor: '#f90', borderRadius: '20px', padding: '0 25px' }}>
                   <Link to={`/product/${product.id}`} style={{ color: '#fff' }}>Xem chi tiết</Link>
                 </Button>

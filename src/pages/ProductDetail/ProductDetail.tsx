@@ -1,25 +1,30 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Rate, Radio, Typography, Row, Col, Skeleton } from "antd";
-import { getProductById, Product } from "../../services/ProductServices";
+import { getProductDetail, Product1 } from "../../services/ProductServices";
 import "./ProductDetail.css";
 
 const { Title, Paragraph } = Typography;
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState<Product | null>(null);
+  const [product, setProduct] = useState<Product1 | null>(null);
   const [loading, setLoading] = useState(true);
   const [rentDuration, setRentDuration] = useState(1);
-  const [mainImage, setMainImage] = useState<string>(""); // State for the main image
+  const [mainImage, setMainImage] = useState<string>("");
+  const [imageArray, setImageArray] = useState<string[]>([]); // Tạo state để lưu mảng ảnh
 
   useEffect(() => {
     const fetchProduct = async () => {
       if (id) {
-        const fetchedProduct = await getProductById(id);
+        const fetchedProduct = await getProductDetail(id);
         setProduct(fetchedProduct);
-        if (fetchedProduct && fetchedProduct.image.length > 0) {
-          setMainImage(fetchedProduct.image[0]); // Set the first image as the initial main image
+
+        // Chuyển đổi `image` từ string thành array
+        if (fetchedProduct && fetchedProduct.image) {
+          const images = fetchedProduct.image.split(","); // Tách chuỗi ảnh bằng dấu phẩy
+          setImageArray(images); // Lưu mảng ảnh vào state
+          setMainImage(images[0]); // Gán ảnh đầu tiên làm main image
         }
         setLoading(false);
       }
@@ -28,12 +33,7 @@ const ProductDetail = () => {
     fetchProduct();
   }, [id]);
 
-  const handleRentChange = (e: any) => {
-    setRentDuration(e.target.value);
-  };
-
   if (loading) {
-    // Render skeletons while loading
     return (
       <div className="product-detail-container">
         <Row gutter={[32, 16]}>
@@ -67,69 +67,76 @@ const ProductDetail = () => {
           <div className="product-image-gallery">
             <img
               className="main-product-image"
-              src={mainImage} // Display the main image
-              alt={product.name}
+              src={mainImage} // Hiển thị hình ảnh chính từ `mainImage`
+              alt={product.productName}
             />
+            {/* Hiển thị các hình ảnh thumbnail */}
             <div className="product-thumbnail-gallery">
-              {product.image.map((thumbnail, index) => (
+              {imageArray.map((thumbnail, index) => (
                 <img
                   key={index}
                   className="product-thumbnail"
                   src={thumbnail}
                   alt={`Thumbnail ${index + 1}`}
-                  onMouseEnter={() => setMainImage(thumbnail)} // Update main image on hover
+                  onMouseEnter={() => setMainImage(thumbnail)} // Cập nhật hình ảnh chính khi hover vào thumbnail
                 />
               ))}
             </div>
           </div>
         </Col>
 
-        {/* Product Info, Buy/Rent Section */}
+        {/* Thông tin sản phẩm */}
         <Col xs={24} md={12}>
           <div className="product-info">
-            <Title level={4}>Hãng: {product.name}</Title>
+            <Title level={4}>Hãng: {product.productName}</Title>
             <Paragraph>
-              <strong>Tên sản phẩm:</strong> {product.name} <br />
+              <strong>Tên sản phẩm:</strong> {product.productName} <br />
               <strong>Đánh giá:</strong> {product.rate} (từ người dùng) <br />
               <strong>Số lượng:</strong> {product.quantity} <br />
-              <strong>Kích cỡ:</strong> {product.size} <br />
-              <strong>Giá mua:</strong> {product.purchase_price} VND <br />
-              <strong>Giá thuê:</strong> {product.rent_price} VND/ngày
+              <strong>Mô tả:</strong> {product.description} <br />
+              <strong>Giá mua:</strong> {product.price} VND <br />
+              {product.isRentable && (
+                <>
+                  <strong>Giá thuê:</strong> {product.rentalPrice} VND/ngày
+                </>
+              )}
             </Paragraph>
 
-            {/* Rating from users */}
+            {/* Đánh giá sản phẩm */}
             <div className="product-rating">
               <Title level={5}>Đánh giá sản phẩm này</Title>
-              <Rate style={{ color: "#ff4d4f" }} />
+              <Rate style={{ color: "#ff4d4f" }} defaultValue={product.rate} />
             </div>
 
-            {/* Buy or Rent Buttons */}
-            <div className="product-buy-rent">
-              <Radio.Group onChange={handleRentChange} value={rentDuration}>
-                <Radio.Button value={1}>1 ngày</Radio.Button>
-                <Radio.Button value={2}>2 ngày</Radio.Button>
-                <Radio.Button value={3}>3 ngày</Radio.Button>
-                <Radio.Button value={4}>4 ngày</Radio.Button>
-              </Radio.Group>
-              <div className="price-section">
-                <Title level={3} style={{ color: "#ff4d4f" }}>
-                  {product.rent_price} VND/ngày
-                </Title>
-                <Button type="primary" className="add-to-cart-btn">
-                  Thêm vào giỏ hàng
-                </Button>
+            {/* Mua hoặc Thuê */}
+            {product.isRentable && (
+              <div className="product-buy-rent">
+                <Radio.Group onChange={(e) => setRentDuration(e.target.value)} value={rentDuration}>
+                  <Radio.Button value={1}>1 ngày</Radio.Button>
+                  <Radio.Button value={2}>2 ngày</Radio.Button>
+                  <Radio.Button value={3}>3 ngày</Radio.Button>
+                  <Radio.Button value={4}>4 ngày</Radio.Button>
+                </Radio.Group>
+                <div className="price-section">
+                  <Title level={3} style={{ color: "#ff4d4f" }}>
+                    {product.rentalPrice} VND/ngày
+                  </Title>
+                  <Button type="primary" className="add-to-cart-btn">
+                    Thêm vào giỏ hàng
+                  </Button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </Col>
       </Row>
 
-      {/* Product Description */}
+      {/* Mô tả sản phẩm */}
       <div className="product-description">
         <Title style={{ color: "white" }} level={4}>
           Chi tiết sản phẩm
         </Title>
-        <Paragraph style={{ color: "white" }}>{product.des}</Paragraph>
+        <Paragraph style={{ color: "white" }}>{product.description}</Paragraph>
       </div>
     </div>
   );

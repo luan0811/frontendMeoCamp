@@ -51,10 +51,12 @@ export interface Product1 {
   createdAt: string;
   updatedAt: string;
   status: boolean;
+  quantity: number;
   image: string;
   cartItems: any[];
   orderDetails: any[];
   rentals: any[];
+  rate: number;
 }
 
 // Định nghĩa các giá trị cho categoryId
@@ -79,5 +81,16 @@ export const getAllProduct = async (): Promise<Product1[]> => {
   } catch (error) {
     console.error('Error fetching products', error);
     throw error;
+  }
+};
+
+// Update the getProductDetail function to return Product1
+export const getProductDetail = async (id: string): Promise<Product1 | null> => {
+  try {
+    const response = await axios.get<Product1>(`${API_BE_URL}Product/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error fetching product with id ${id}:`, error);
+    return null;
   }
 };

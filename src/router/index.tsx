@@ -9,6 +9,7 @@ import ProductDetail from "../pages/ProductDetail/ProductDetail";
 import Cart from "../pages/Cart/Cart";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import Profile from "../pages/Profile/Profile";
+import Blog from "../pages/blog/Blog";
 const AppRouter = () => {
   return (
     <Router>
@@ -71,6 +72,14 @@ const AppRouter = () => {
           element={
             <Layout>
               <Profile />
+            </Layout>
+          }
+        />
+        <Route
+          path="/blogs"
+          element={
+            <Layout>
+              <Blog />
             </Layout>
           }
         />

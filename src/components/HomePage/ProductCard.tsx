@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const { Title, Text } = Typography;
 
 interface ProductCardProps {
-  id: string; // Add id as a prop for routing
+  id: number; // Add id as a prop for routing
   image: string;
   name: string;
   rent_price: number;
