@@ -22,16 +22,19 @@ const ProductList: React.FC<ProductListProps> = ({ products, loading }) => {
             </Col>
           ))
         : // Render actual product cards when data is available
-          products.map((product) => (
-            <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
-              <ProductCard
-                id={product.id.toString()}
-                name={product.productName}
-                image={product.image}
-                rentPrice={product.rentalPrice}
-              />
-            </Col>
-          ))}
+          products.map((product) => {
+            const firstImage = product.image.split(',')[0]; // Lấy hình ảnh đầu tiên
+            return (
+              <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
+                <ProductCard
+                  id={product.id.toString()}
+                  name={product.productName}
+                  image={firstImage} // Truyền hình ảnh đầu tiên
+                  rentPrice={product.rentalPrice}
+                />
+              </Col>
+            );
+          })}
     </Row>
   );
 };
