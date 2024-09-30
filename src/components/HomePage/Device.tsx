@@ -27,7 +27,7 @@ const Device = () => {
   };
 
   const filteredProducts = selectedType === 'All Products' || selectedType === 'Tất cả thiết bị'
-    ? products.filter(product => product.categoryId === 2).slice(0, 8)
+    ? products.filter(product => product.categoryId === 3).slice(0, 8)
     : products.filter(product => product.categoryId === parseInt(selectedType)).slice(0, 8);
 
   return (

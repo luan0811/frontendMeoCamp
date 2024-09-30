@@ -28,7 +28,7 @@ const Accessory = () => {
 
   // Filter products where the type is "Accessory" and limit to 8 cards
   const filteredProducts = selectedType === 'All Products' || selectedType === 'Tất cả phụ kiện'
-    ? products.filter(product => product.categoryId === 3).slice(0, 8)
+    ? products.filter(product => product.categoryId === 2).slice(0, 8)
     : products.filter(product => product.categoryId === parseInt(selectedType)).slice(0, 8);
 
   return (

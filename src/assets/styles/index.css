@@ -2,7 +2,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: allfont;
   }
+
+@font-face {
+  font-family: allfont;
+  src: url(../font/Roboto-Regular.ttf);
+}
 
   @font-face {
     font-family:contactUsFont;

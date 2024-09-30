@@ -10,21 +10,21 @@ const { Header: AntHeader } = Layout;
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
+  const [role, setRole] = useState('');
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
     const storedUser = localStorage.getItem('user');
-    
+
     try {
-      const user = storedUser ? JSON.parse(storedUser) : null; // Check if storedUser is not null
-      console.log('user', user);
+      const user = storedUser ? JSON.parse(storedUser) : null;
       setIsLoggedIn(loggedIn);
       if (user) {
         setUsername(user.username);
+        setRole(user.role); // Get the user's role
       }
     } catch (error) {
       console.error('Error parsing user data:', error);
-      // Handle the error, e.g., clear invalid data or set defaults
       localStorage.removeItem('user');
     }
   }, []);
@@ -45,6 +45,43 @@ const Header = () => {
     </AntMenu>
   );
 
+  const adminMenu = (
+    <Menu mode="horizontal" defaultSelectedKeys={['1']} style={{ flexGrow: 1 }}>
+      <Menu.Item key="1">
+        <Link to="/admin/add-product">Đăng sản phẩm</Link>
+      </Menu.Item>
+      <Menu.Item key="2">
+        <Link to="/admin/manage-products">Quản lý sản phẩm</Link>
+      </Menu.Item>
+      <Menu.Item key="3">
+        <Link to="/admin/manage-users">Quản lý người dùng</Link>
+      </Menu.Item>
+      <Menu.Item key="4">
+        <Link to="/admin/manage-orders">Quản lý đơn đặt hàng</Link>
+      </Menu.Item>
+    </Menu>
+  );
+
+  const userMenu = (
+    <Menu mode="horizontal" defaultSelectedKeys={['1']} style={{ flexGrow: 1 }}>
+      <Menu.Item key="1">
+        <Link to="/">Trang chủ</Link>
+      </Menu.Item>
+      <Menu.Item key="2">
+        <Link to="/about">Về chúng tôi</Link>
+      </Menu.Item>
+      <Menu.Item key="3">
+        <Link to="/products">Sản phẩm</Link>
+      </Menu.Item>
+      <Menu.Item key="4">
+        <Link to="/contact">Liên lạc</Link>
+      </Menu.Item>
+      <Menu.Item key="5">
+        <Link to="/blogs">Blogs</Link>
+      </Menu.Item>
+    </Menu>
+  );
+
   return (
     <AntHeader style={{
       background: '#fff',
@@ -52,35 +89,20 @@ const Header = () => {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      position: 'fixed', 
-      top: 0, 
-      width: '100%', 
-      zIndex: 1000, 
+      position: 'fixed',
+      top: 0,
+      width: '100%',
+      zIndex: 1000,
     }}>
       <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
         <Link to="/">
           <img src={logo} alt="Logo" style={{ height: 50, marginRight: 20, marginBottom: -20 }} />
         </Link>
-        <Menu mode="horizontal" defaultSelectedKeys={['1']} style={{ flexGrow: 1 }}>
-          <Menu.Item key="1">
-            <Link to="/">Trang chủ</Link>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Link to="/about">Về chúng tôi</Link>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Link to="/products">Sản phẩm</Link>
-          </Menu.Item>
-          <Menu.Item key="4">
-            <Link to="/contact">Liên lạc</Link>
-          </Menu.Item>
-          <Menu.Item key="5">
-            <Link to="/blogs">Blogs</Link>
-          </Menu.Item>
-        </Menu>
+        {/* Render adminMenu if the user is an admin, otherwise render userMenu */}
+        {role === 'Admin' ? adminMenu : userMenu}
       </div>
       <div style={{ display: 'flex', alignItems: 'center' }}>
-        {isLoggedIn && (
+        {isLoggedIn && role !== 'Admin' && (
           <Link to="/cart" style={{ marginRight: '16px' }}>
             <Badge count={5}>
               <ShoppingCartOutlined style={{ fontSize: '24px', color: '#1890ff' }} />

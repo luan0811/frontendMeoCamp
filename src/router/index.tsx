@@ -10,6 +10,7 @@ import Cart from "../pages/Cart/Cart";
 import ContactUs from "../pages/ContactUs/ContactUs";
 import Profile from "../pages/Profile/Profile";
 import Blog from "../pages/blog/Blog";
+import AdminAddProduct from "../pages/AdminAddProduct/AdminAddProduct";
 const AppRouter = () => {
   return (
     <Router>
@@ -83,6 +84,17 @@ const AppRouter = () => {
             </Layout>
           }
         />
+
+        {/* admin */}
+        <Route
+          path="/admin/add-product"
+          element={
+            <Layout>
+              <AdminAddProduct />
+            </Layout>
+          }
+        />
+
         {/* Đường dẫn không xác định, chuyển hướng về Home */}
         <Route
           path="*"
