@@ -11,6 +11,8 @@ import ContactUs from "../pages/ContactUs/ContactUs";
 import Profile from "../pages/Profile/Profile";
 import Blog from "../pages/blog/Blog";
 import AdminAddProduct from "../pages/AdminAddProduct/AdminAddProduct";
+import AdminGetAllProduct from "../pages/Admin/AdminGetAllProduct";
+import AdminUpdateProduct from "../pages/Admin/AdminUpdateProduct";
 const AppRouter = () => {
   return (
     <Router>
@@ -91,6 +93,22 @@ const AppRouter = () => {
           element={
             <Layout>
               <AdminAddProduct />
+            </Layout>
+          }
+        />
+        <Route
+          path="/admin/manage-products"
+          element={
+            <Layout>
+              <AdminGetAllProduct />
+            </Layout>
+          }
+        />
+        <Route
+          path="/admin/manage-products/update/:id"
+          element={
+            <Layout>
+              <AdminUpdateProduct />
             </Layout>
           }
         />
