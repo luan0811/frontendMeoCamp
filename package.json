@@ -14,6 +14,7 @@
     "@types/styled-components": "^5.1.34",
     "antd": "^5.20.1",
     "axios": "^1.7.5",
+    "date-fns": "^4.1.0",
     "firebase": "^10.13.2",
     "framer-motion": "^11.5.5",
     "meocamp": "file:",

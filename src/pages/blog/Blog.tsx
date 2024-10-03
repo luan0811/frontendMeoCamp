@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Card, Col, Row, Input, Typography, Skeleton } from 'antd';
+import { Card, Col, Row, Input, Typography, Skeleton, Button } from 'antd';
 import { getAllBlogs, getCustomerMap } from '../../services/BlogServices';
 import { useNavigate } from 'react-router-dom';
+import { PlusOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 const { Search } = Input;
@@ -13,7 +14,7 @@ interface Blog {
     title: string;
     content: string;
     image: string;
-    postDate: string;
+    post_date: string;
     customerId: number;
 }
 
@@ -23,6 +24,7 @@ function BlogPage() {
     const [filteredBlogs, setFilteredBlogs] = useState<Blog[]>([]);
     const [loading, setLoading] = useState(true);
     const [customerMap, setCustomerMap] = useState<Map<number, string>>(new Map());
+
 
     // Fetch all blogs on component mount
     useEffect(() => {
@@ -51,6 +53,7 @@ function BlogPage() {
             blog.title.toLowerCase().includes(value.toLowerCase())
         );
         setFilteredBlogs(searchResult);
+
     };
 
     const handleViewBlog = (blogId: number) => {
@@ -60,12 +63,21 @@ function BlogPage() {
     return (
         <div style={{ padding: '70px', backgroundColor: '#1e1e1e' }}>
             <Title level={2} style={{ textAlign: 'center', marginBottom: '30px', color: 'white' }}>Bài Viết</Title>
-            <Search
-                placeholder="Tìm kiếm blog"
-                onSearch={handleSearch}
-                enterButton
-                style={{ marginBottom: '30px', maxWidth: '600px', margin: '0 auto 30px' }}
-            />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
+                <Search
+                    placeholder="Tìm kiếm blog"
+                    onSearch={handleSearch}
+                    enterButton
+                    style={{ width: '300px' }}
+                />
+                <Button
+                    type="primary"
+                    icon={<PlusOutlined />}
+                    onClick={() => navigate('/addblog')}
+                >
+                    Thêm Blog
+                </Button>
+            </div>
             <Row gutter={[16, 16]}>
                 {loading ? (
                     // Skeleton loading
@@ -109,7 +121,7 @@ function BlogPage() {
                                     description={
                                         <div>
                                             <p style={{ color: '#888', fontSize: '0.9em' }}>
-                                                Ngày đăng: {new Date(blog.postDate).toLocaleDateString('vi-VN')}
+                                                Ngày đăng: {new Date(blog.post_date).toLocaleString('vi-VN')}
                                             </p>
                                             <p style={{ color: '#888', fontSize: '0.9em' }}>
                                                 Tác giả: {customerMap.get(blog.customerId) || 'Unknown'}

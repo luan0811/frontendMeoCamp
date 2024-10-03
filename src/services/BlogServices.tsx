@@ -10,7 +10,7 @@ interface Blog {
   title: string;
   content: string;
   image: string;
-  postDate: string;
+  post_date: string;
   customerId: number;
   // Add other relevant blog fields
 }
@@ -37,8 +37,15 @@ export const getBlogByUserId = async (userId: number): Promise<Blog[]> => {
   }
 };
 
-// Create a new blog
-export const createBlog = async (userId: number, blogData: Omit<Blog, 'id'>): Promise<Blog> => {
+// Define the type for createBlog data
+interface CreateBlogData {
+  title: string;
+  content: string;
+  image: string;
+}
+
+// Update the createBlog function
+export const createBlog = async (userId: number, blogData: CreateBlogData): Promise<Blog> => {
   try {
     const response = await axios.post<Blog>(`${API_BE_URL}Blog/CreateBlog/${userId}`, blogData);
     return response.data;
