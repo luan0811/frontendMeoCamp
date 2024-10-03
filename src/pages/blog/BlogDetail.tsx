@@ -11,7 +11,7 @@ interface Blog {
   title: string;
   content: string;
   image: string;
-  postDate: string;
+  post_date: string;
   customerId: number;
 }
 
@@ -88,7 +88,7 @@ const BlogDetail: React.FC = () => {
           <span>Author: {authorName}</span>
           <Divider type="vertical" />
           <CalendarOutlined />
-          <span>{new Date(blog.postDate).toLocaleDateString('vi-VN')}</span>
+          <span>{new Date(blog.post_date).toLocaleDateString('vi-VN')}</span>
         </Space>
         <Divider />
         <Paragraph style={{ fontSize: 16, lineHeight: 1.8, color: 'rgba(0, 0, 0, 0.85)' }}>
