@@ -18,11 +18,12 @@ export interface Product1 {
   updatedAt: string;
   status: boolean;
   quantity: number;
-  image: string;
+  images: string[];
   cartItems: any[];
   orderDetails: any[];
   rentals: any[];
   rate: number;
+  subcate: string;
 }
 
 // Định nghĩa các giá trị cho categoryId

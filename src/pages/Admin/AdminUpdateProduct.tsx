@@ -28,6 +28,7 @@ const AdminUpdateProduct = () => {
           quantity: product.quantity,
           categoryId: product.categoryId,
           isRentable: product.isRentable,
+          status: product.status,
         });
         setImageUrls(product.image.split(',')); // Giả định rằng image là chuỗi ngăn cách bằng dấu phẩy
       }
@@ -37,6 +38,7 @@ const AdminUpdateProduct = () => {
   }, [id, form]);
 
   const handleUploadImage = async (file: File) => {
+    console.log(file)
     const storage = getStorage(app);
     const storageRef = ref(storage, `images/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
@@ -119,7 +121,14 @@ const AdminUpdateProduct = () => {
           </Select>
         </Form.Item>
 
-        <Form.Item label="Product Images" name="imageUpload">
+        <Form.Item label="Status" name="status" rules={[{ required: true }]}>
+          <Select>
+            <Option value={true}>Active</Option>
+            <Option value={false}>Inactive</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item label="Product Images" name="image">
           <Upload
             customRequest={({ file, onSuccess }) => {
               if (file instanceof File) {
@@ -135,7 +144,7 @@ const AdminUpdateProduct = () => {
           {imageUrls.length > 0 && (
             <div style={{ marginTop: '10px' }}>
               {imageUrls.map((url, index) => (
-                <img key={index} src={url} alt={`Product ${index}`} style={{ width: '100px', marginRight: '10px' }} />
+                <img key={index} src={url} alt={`Product ${index}`} style={{ width: '100px', marginRight: '10px' }} />         
               ))}
             </div>
           )}

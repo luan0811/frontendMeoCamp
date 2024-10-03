@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Typography, Button } from 'antd';
 import { Link } from 'react-router-dom';
+import defaultImage from '../../assets/img/default.jpg'; // Đảm bảo đường dẫn này chính xác
 
 const { Title, Text } = Typography;
 
@@ -15,7 +16,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, image, name, rent_price }
   return (
     <Card
       hoverable
-      cover={<img alt={name} src={image} style={{ height: '250px', objectFit: 'cover' }} />}
+      cover={<img alt={name} src={image || defaultImage} style={{ height: '250px', objectFit: 'cover' }} />}
       style={{
         borderRadius: '15px',
         overflow: 'hidden',

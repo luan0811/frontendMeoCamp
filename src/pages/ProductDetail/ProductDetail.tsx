@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Rate, Radio, Typography, Row, Col, Skeleton } from "antd";
+import { Button, Rate, Radio, Typography, Row, Col, Skeleton, Tag } from "antd";
 import { getProductDetail, Product1 } from "../../services/ProductServices";
 import "./ProductDetail.css";
 
@@ -12,7 +12,6 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [rentDuration, setRentDuration] = useState(1);
   const [mainImage, setMainImage] = useState<string>("");
-  const [imageArray, setImageArray] = useState<string[]>([]); // Tạo state để lưu mảng ảnh
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -20,11 +19,8 @@ const ProductDetail = () => {
         const fetchedProduct = await getProductDetail(id);
         setProduct(fetchedProduct);
 
-        // Chuyển đổi `image` từ string thành array
-        if (fetchedProduct && fetchedProduct.image) {
-          const images = fetchedProduct.image.split(","); // Tách chuỗi ảnh bằng dấu phẩy
-          setImageArray(images); // Lưu mảng ảnh vào state
-          setMainImage(images[0]); // Gán ảnh đầu tiên làm main image
+        if (fetchedProduct && fetchedProduct.images && fetchedProduct.images.length > 0) {
+          setMainImage(fetchedProduct.images[0]); // Gán ảnh đầu tiên làm main image
         }
         setLoading(false);
       }
@@ -60,6 +56,19 @@ const ProductDetail = () => {
     return <div>Product not found</div>;
   }
 
+  const getCategoryName = (categoryId: number) => {
+    switch (categoryId) {
+      case 1:
+        return "Lều";
+      case 2:
+        return "Phụ kiện";
+      case 3:
+        return "Trang bị";
+      default:
+        return "Không xác định";
+    }
+  };
+
   return (
     <div className="product-detail-container">
       <Row gutter={[32, 16]}>
@@ -72,7 +81,7 @@ const ProductDetail = () => {
             />
             {/* Hiển thị các hình ảnh thumbnail */}
             <div className="product-thumbnail-gallery">
-              {imageArray.map((thumbnail, index) => (
+              {product.images.map((thumbnail, index) => (
                 <img
                   key={index}
                   className="product-thumbnail"
@@ -90,7 +99,8 @@ const ProductDetail = () => {
           <div className="product-info">
             <Title level={4}>Hãng: {product.productName}</Title>
             <Paragraph>
-              <strong>Tên sản phẩm:</strong> {product.productName} <br />
+              <strong>Danh mục:</strong> {getCategoryName(product.categoryId)} <br />
+              <strong>Danh mục phụ:</strong> <Tag color="blue">{product.subcate}</Tag> <br />
               <strong>Đánh giá:</strong> {product.rate} (từ người dùng) <br />
               <strong>Số lượng:</strong> {product.quantity} <br />
               <strong>Mô tả:</strong> {product.description} <br />

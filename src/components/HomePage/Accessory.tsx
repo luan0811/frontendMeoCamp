@@ -28,8 +28,8 @@ const Accessory = () => {
 
   // Filter products where the type is "Accessory" and limit to 8 cards
   const filteredProducts = selectedType === 'All Products' || selectedType === 'Tất cả phụ kiện'
-    ? products.filter(product => product.categoryId === 2).slice(0, 8)
-    : products.filter(product => product.categoryId === parseInt(selectedType)).slice(0, 8);
+    ? products.filter(product => product.categoryId === 2 && product.status === true).slice(0, 8)
+    : products.filter(product => product.categoryId === parseInt(selectedType) && product.status === true).slice(0, 8);
 
   return (
     <div style={{
@@ -91,7 +91,7 @@ const Accessory = () => {
             <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
               <Card
                 hoverable
-                cover={<img alt={product.productName} src={Array.isArray(product.image) ? product.image[0] : product.image || defaultpic} style={{ height: '250px', objectFit: 'cover' }} />}
+                cover={<img alt={product.productName} src={product.images && product.images.length > 0 ? product.images[0] : defaultpic} style={{ height: '250px', objectFit: 'cover' }} />}
                 style={{
                   borderRadius: '15px',
                   overflow: 'hidden',

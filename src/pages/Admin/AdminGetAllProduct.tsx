@@ -89,23 +89,20 @@ function AdminGetAllProduct() {
     },
     {
       title: "Image",
-      dataIndex: "image",
-      key: "image",
-      render: (images: string) => {
-        const imageArray = images.split(",");
-        return (
-          <div style={{ display: 'flex', gap: '5px' }}>
-            {imageArray.map((image, index) => (
-              <img
-                key={index}
-                src={image}
-                alt={`Product ${index + 1}`}
-                style={{ width: "80px", height: "80px", objectFit: "cover" }}
-              />
-            ))}
-          </div>
-        );
-      },
+      dataIndex: "images",
+      key: "images",
+      render: (images: string[]) => (
+        <div style={{ display: 'flex', gap: '5px' }}>
+          {images.map((image, index) => (
+            <img
+              key={index}
+              src={image}
+              alt={`Product ${index + 1}`}
+              style={{ width: "80px", height: "80px", objectFit: "cover" }}
+            />
+          ))}
+        </div>
+      ),
     },
     {
       title: "Status",

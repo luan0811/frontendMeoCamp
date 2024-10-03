@@ -22,8 +22,9 @@ const Products = () => {
       setLoading(true); // Start loading
       try {
         const fetchedProducts = await getAllProduct(); // Fetch real data
-        setProducts(fetchedProducts);
-        setFilteredProducts(fetchedProducts);
+        const activeProducts = fetchedProducts.filter(product => product.status === true);
+        setProducts(activeProducts);
+        setFilteredProducts(activeProducts);
       } catch (error) {
         console.error('Error fetching products', error);
       } finally {
@@ -44,9 +45,11 @@ const Products = () => {
 
   const handleSearch = (value: string) => {
     const normalizedValue = normalizeText(value.toLowerCase());
-    const filtered = products.filter(product =>
-      normalizeText(product.productName.toLowerCase()).includes(normalizedValue)
-    );
+    const filtered = products
+      .filter(product => product.status === true) // Chỉ lọc những sản phẩm có status true
+      .filter(product =>
+        normalizeText(product.productName.toLowerCase()).includes(normalizedValue)
+      );
     setFilteredProducts(filtered);
     setCurrentPage(1); // Reset to first page after search
   };
@@ -54,11 +57,12 @@ const Products = () => {
   const handleCategorySelect = (type: string) => {
     const filtered = type === 'others'
       ? products.filter(product => !['tent', 'accessory', 'equipment'].includes(product.categoryId.toString()))
-      : products.filter(product => product.categoryId.toString() === type);
+      : products.filter(product => product.categoryId.toString() === type && product.status === true); // Lọc theo category và status
     setFilteredProducts(filtered);
     setCurrentPage(1);
   };
 
+  // Chỉ phân trang với các sản phẩm status true đã được lọc
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);

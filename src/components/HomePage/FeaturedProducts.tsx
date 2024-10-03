@@ -13,6 +13,7 @@ const FeaturedProducts = () => {
     const fetchProducts = async () => {
       const fetchedProducts = await getAllProduct();
       const topRatedProducts = fetchedProducts
+        .filter(product => product.status === true)
         .sort((a, b) => b.rate - a.rate)
         .slice(0, 3);
 
@@ -22,6 +23,11 @@ const FeaturedProducts = () => {
 
     fetchProducts();
   }, []);
+
+  // Hàm để lấy ảnh đầu tiên từ mảng ảnh
+  const getFirstImage = (images: string[]) => {
+    return images && images.length > 0 ? images[0] : ''; // Trả về ảnh đầu tiên hoặc chuỗi rỗng nếu không có ảnh
+  };
 
   return (
     <div style={{
@@ -46,7 +52,6 @@ const FeaturedProducts = () => {
       <div style={{
         width: '60px',
         height: '4px',
-        // backgroundColor: '#f90',
         margin: '0 auto 60px',
       }}></div>
       {loading ? (
@@ -57,7 +62,12 @@ const FeaturedProducts = () => {
         <Row gutter={[32, 32]} justify="center">
           {products.map((product) => (
             <Col key={product.id} xs={24} sm={12} md={8} lg={8}>
-              <ProductCard id={product.id} image={product.image[0]} name={product.productName} rent_price={product.rentalPrice} />
+              <ProductCard 
+                id={product.id} 
+                image={getFirstImage(product.images)} 
+                name={product.productName} 
+                rent_price={product.rentalPrice} 
+              />
             </Col>
           ))}
         </Row>

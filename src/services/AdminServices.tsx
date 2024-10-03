@@ -10,12 +10,10 @@ const AdminServices = {
     rentalPrice: number;
     isRentable: boolean;
     categoryId: number;
-    createdAt: string;
-    updatedAt: string;
     status: boolean;
-    image: string; // Lưu ý: nếu hình ảnh là nhiều, bạn có thể dùng array `string[]`
+    images: string[];
     quantity: number;
-    rate: number;
+    subcate: string;
   }) => {
     try {
       const response = await axios.post(`${API_BE_URL}Product/add-new-product`, productData, {
@@ -25,7 +23,11 @@ const AdminServices = {
       });
       return response.data;
     } catch (error) {
-      console.error("Error adding new product:", error);
+      if (axios.isAxiosError(error)) {
+        console.error("Error adding new product:", error.response?.data);
+      } else {
+        console.error("Error adding new product:", error);
+      }
       throw error;
     }
   },

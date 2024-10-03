@@ -14,12 +14,11 @@ interface ProductData {
     rentalPrice: number;
     isRentable: boolean;
     categoryId: number;
-    createdAt: string;
-    updatedAt: string;
     status: boolean;
-    image: string; // Lưu ý: nếu hình ảnh là nhiều, bạn có thể dùng array `string[]`
+    images: string[];
     quantity: number;
-    rate: number;
+    subcate: string;
+    // Bỏ các trường không cần thiết như createdAt, updatedAt, rate
 }
 
 const AddProductForm = () => {
@@ -27,6 +26,7 @@ const AddProductForm = () => {
     const [imageUrls, setImageUrls] = useState<string[]>([]);
     const [previewVisible, setPreviewVisible] = useState(false);
     const [productData, setProductData] = useState<ProductData | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
     const handleUploadImage = async (file: File) => {
         const storage = getStorage(app);
@@ -40,7 +40,7 @@ const AddProductForm = () => {
                 error => reject(error),
                 async () => {
                     const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-                    setImageUrls(prevUrls => [...prevUrls, downloadURL]); // Thêm URL vào mảng
+                    setImageUrls(prevUrls => [...prevUrls, downloadURL]);
                     resolve(downloadURL);
                 }
             );
@@ -48,22 +48,40 @@ const AddProductForm = () => {
     };
 
     const handlePreview = (values: any) => {
-        const imagesString = imageUrls.join(','); // Nối các URL thành chuỗi
-        setProductData({ ...values, image: imagesString, status: true } as ProductData);
+        const currentDate = new Date().toISOString();
+        setProductData({
+            ...values,
+            images: imageUrls,
+            status: true,
+            subCate: values.subCate || '', // Thêm trường subCate
+            createdAt: currentDate,
+            updatedAt: currentDate,
+        } as ProductData);
         setPreviewVisible(true);
     };
 
     const handleConfirm = async () => {
         if (!productData) return;
         try {
-            await AdminServices.addNewProduct(productData); // Gửi dữ liệu tới API với nhiều hình ảnh
+            await AdminServices.addNewProduct(productData);
             Modal.success({ title: 'Sản phẩm đã được thêm thành công!' });
             form.resetFields();
             setPreviewVisible(false);
-            setImageUrls([]); // Reset lại sau khi thành công
+            setImageUrls([]);
         } catch (error: any) {
             Modal.error({ title: 'Thêm sản phẩm thất bại', content: error.message });
         }
+    };
+
+    const handleCategoryChange = (value: number) => {
+        setSelectedCategory(value);
+        form.setFieldsValue({ subCate: undefined }); // Reset subcategory when main category changes
+    };
+
+    const subCategoryOptions = {
+        1: ['Lều 2 người', 'Lều 4 người', 'Lều 6 người', 'Lều 8 người', 'Lều 12 người'],
+        2: ['Túi', 'Găng tay', 'Giày/Ủng', 'Mũ', 'Đèn pin'],
+        3: ['Nấu ăn', 'Y tế', 'Tổ chức', 'Vệ sinh', 'Di chuyển']
     };
 
     return (
@@ -94,12 +112,22 @@ const AddProductForm = () => {
                 </Form.Item>
 
                 <Form.Item label="Danh mục" name="categoryId" rules={[{ required: true, message: 'Vui lòng chọn danh mục' }]}>
-                    <Select>
+                    <Select onChange={handleCategoryChange}>
                         <Option value={1}>Lều</Option>
                         <Option value={2}>Phụ kiện</Option>
                         <Option value={3}>Trang bị</Option>
                     </Select>
                 </Form.Item>
+
+                {selectedCategory && (
+                    <Form.Item label="Danh mục phụ" name="subCate" rules={[{ required: true, message: 'Vui lòng chọn danh mục phụ' }]}>
+                        <Select>
+                            {subCategoryOptions[selectedCategory as keyof typeof subCategoryOptions].map((option, index) => (
+                                <Option key={index} value={option}>{option}</Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                )}
 
                 <Form.Item label="Có thể thuê" name="isRentable" rules={[{ required: true }]}>
                     <Select>
@@ -108,22 +136,18 @@ const AddProductForm = () => {
                     </Select>
                 </Form.Item>
 
-                <Form.Item
-                    label="Hình ảnh sản phẩm"
-                    name="imageUpload"  // Thêm name để form quản lý giá trị
-                    rules={[
-                        {
-                            required: true,
-                            validator: (_, _value) => {
-                                if (imageUrls.length > 0) {
-                                    return Promise.resolve();
-                                } else {
-                                    return Promise.reject(new Error('Vui lòng tải lên ít nhất một hình ảnh!'));
-                                }
-                            },
+                <Form.Item label="Hình ảnh sản phẩm" name="imageUpload" rules={[
+                    {
+                        required: true,
+                        validator: (_, _value) => {
+                            if (imageUrls.length > 0) {
+                                return Promise.resolve();
+                            } else {
+                                return Promise.reject(new Error('Vui lòng tải lên ít nhất một hình ảnh!'));
+                            }
                         },
-                    ]}
-                >
+                    },
+                ]}>
                     <Upload
                         customRequest={({ file, onSuccess }) => {
                             if (file instanceof File) {
@@ -167,9 +191,10 @@ const AddProductForm = () => {
                         <p><strong>Số lượng:</strong> {productData.quantity}</p>
                         <p><strong>Danh mục:</strong> {productData.categoryId}</p>
                         <p><strong>Có thể thuê:</strong> {productData.isRentable ? 'Có' : 'Không'}</p>
-                        {imageUrls.length > 0 && (
+                        <p><strong>Danh mục phụ:</strong> {productData.subcate}</p>
+                        {productData.images.length > 0 && (
                             <div>
-                                {imageUrls.map((url, index) => (
+                                {productData.images.map((url, index) => (
                                     <img key={index} src={url} alt={`Product ${index}`} style={{ width: '100px', marginRight: '10px' }} />
                                 ))}
                             </div>

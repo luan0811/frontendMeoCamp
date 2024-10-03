@@ -1,11 +1,11 @@
 import React from 'react';
 import { Row, Col, Skeleton, Card } from 'antd';
 import ProductCard from './ProductCard';
-import { Product1 } from '../../services/ProductServices'; // Use correct Product1 type
+import { Product1 } from '../../services/ProductServices';
 
 interface ProductListProps {
-  products: Product1[]; // Expecting Product1 array type as a prop
-  loading: boolean; // Expecting loading state
+  products: Product1[];
+  loading: boolean;
 }
 
 const ProductList: React.FC<ProductListProps> = ({ products, loading }) => {
@@ -23,13 +23,13 @@ const ProductList: React.FC<ProductListProps> = ({ products, loading }) => {
           ))
         : // Render actual product cards when data is available
           products.map((product) => {
-            const firstImage = product.image.split(',')[0]; // Lấy hình ảnh đầu tiên
+            const firstImage = product.images && product.images.length > 0 ? product.images[0] : '';
             return (
               <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
                 <ProductCard
                   id={product.id.toString()}
                   name={product.productName}
-                  image={firstImage} // Truyền hình ảnh đầu tiên
+                  image={firstImage}
                   rentPrice={product.rentalPrice}
                 />
               </Col>
