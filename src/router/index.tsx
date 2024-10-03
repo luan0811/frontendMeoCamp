@@ -13,6 +13,7 @@ import Blog from "../pages/blog/Blog";
 import AdminAddProduct from "../pages/AdminAddProduct/AdminAddProduct";
 import AdminGetAllProduct from "../pages/Admin/AdminGetAllProduct";
 import AdminUpdateProduct from "../pages/Admin/AdminUpdateProduct";
+import BlogDetail from "../pages/blog/BlogDetail";
 const AppRouter = () => {
   return (
     <Router>
@@ -83,6 +84,14 @@ const AppRouter = () => {
           element={
             <Layout>
               <Blog />
+            </Layout>
+          }
+        />
+        <Route
+          path="/blog/:id"
+          element={
+            <Layout>
+              <BlogDetail />
             </Layout>
           }
         />

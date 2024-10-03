@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { getAllCustomer } from '../services/AuthServices';
 
 // Define the API URL from environment variables or a hardcoded URL
-const API_BE_URL = process.env.REACT_APP_API_BE_URL; // Ensure you've set this in .env
+const API_BE_URL = import.meta.env.VITE_API_BE_URL;
 
 // Define types for your blog data
 interface Blog {
@@ -10,7 +11,7 @@ interface Blog {
   content: string;
   image: string;
   postDate: string;
-  authorId: number;
+  customerId: number;
   // Add other relevant blog fields
 }
 
@@ -67,3 +68,31 @@ export const deleteBlog = async (userId: number): Promise<void> => {
     throw error;
   }
 };
+
+// Thêm hàm này vào cuối file
+export const getBlogById = async (id: string): Promise<Blog | null> => {
+  try {
+    const allBlogs = await getAllBlogs();
+    const blog = allBlogs.find(blog => blog.id === parseInt(id));
+    return blog || null;
+  } catch (error) {
+    console.error(`Error fetching blog with id ${id}:`, error);
+    throw error;
+  }
+};
+
+// Add this function at the end of the file
+export const getCustomerMap = async (): Promise<Map<number, string>> => {
+  try {
+    const customers: any[] = await getAllCustomer();
+    const customerMap = new Map<number, string>();
+    customers.forEach(customer => {
+      customerMap.set(customer.id, customer.username);
+    });
+    return customerMap;
+  } catch (error) {
+    console.error("Error creating customer map", error);
+    throw error;
+  }
+};
+

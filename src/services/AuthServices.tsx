@@ -60,3 +60,12 @@ export const changePassword = async (username: string, newPassword: string, conf
   }
 };
 
+export const getAllCustomer = async () => {
+  try {
+    const response = await axios.get(`${API_BE_URL}AuthLogin/listUser`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
