@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Rate, Radio, Typography, Row, Col, Skeleton, Tag } from "antd";
+import { Button, Rate, Radio, Typography, Row, Col, Skeleton, Tag, message } from "antd";
 import { getProductDetail, Product1 } from "../../services/ProductServices";
+import { addToCart } from "../../services/CartServices";
 import "./ProductDetail.css";
 
 const { Title, Paragraph } = Typography;
@@ -12,6 +13,22 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [rentDuration, setRentDuration] = useState(1);
   const [mainImage, setMainImage] = useState<string>("");
+
+
+  const handleAddToCart = async () => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      message.error('Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng');
+      return;
+    }
+
+    try {
+      await addToCart(parseInt(userId), parseInt(id!), 1);
+      message.success('Đã thêm sản phẩm vào giỏ hàng');
+    } catch (error) {
+      message.error('Không thể thêm sản phẩm vào giỏ hàng');
+    }
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -131,7 +148,7 @@ const ProductDetail = () => {
                   <Title level={3} style={{ color: "#ff4d4f" }}>
                     {product.rentalPrice} VND/ngày
                   </Title>
-                  <Button type="primary" className="add-to-cart-btn">
+                  <Button type="primary" className="add-to-cart-btn" onClick={handleAddToCart}>
                     Thêm vào giỏ hàng
                   </Button>
                 </div>
