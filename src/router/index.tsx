@@ -15,6 +15,8 @@ import AdminGetAllProduct from "../pages/Admin/AdminGetAllProduct";
 import AdminUpdateProduct from "../pages/Admin/AdminUpdateProduct";
 import BlogDetail from "../pages/blog/BlogDetail";
 import AddBlog from "../pages/blog/AddBlog";
+import AdminGetAllUsers from "../pages/Admin/AdminGetAllUsers";
+import AdminManageBlog from "../pages/Admin/AdminManageBlog";
 const AppRouter = () => {
   return (
     <Router>
@@ -127,6 +129,22 @@ const AppRouter = () => {
           element={
             <Layout>
               <AdminUpdateProduct />
+            </Layout>
+          }
+        />
+        <Route
+          path="/admin/manage-users"
+          element={
+            <Layout>
+              <AdminGetAllUsers />
+            </Layout>
+          }
+        />
+        <Route
+          path="/admin/manage-blogs"
+          element={
+            <Layout>
+              <AdminManageBlog />
             </Layout>
           }
         />

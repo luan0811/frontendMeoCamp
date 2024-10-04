@@ -18,7 +18,7 @@ const AdminServices = {
     try {
       const response = await axios.post(`${API_BE_URL}Product/add-new-product`, productData, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json; charset=utf-8',
         },
       });
       return response.data;

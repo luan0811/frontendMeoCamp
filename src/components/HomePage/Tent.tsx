@@ -10,7 +10,7 @@ const { Title } = Typography;
 const Tent = () => {
   const [products, setProducts] = useState<Product1[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedType, setSelectedType] = useState<string>('All Products');
+  const [selectedType, setSelectedType] = useState<string>('Tất cả lều');
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -26,10 +26,16 @@ const Tent = () => {
     setSelectedType(type);
   };
 
-  // Filter products where the type is "Tent" and limit to 8 cards
-  const filteredProducts = selectedType === 'All Products' || selectedType === 'Tất cả lều'
-    ? products.filter(product => product.categoryId === 1 && product.status === true).slice(0, 8)
-    : products.filter(product => product.categoryId === parseInt(selectedType) && product.status === true).slice(0, 8);
+  const tentTypes = ['Tất cả lều', 'Lều 2 người', 'Lều 4 người', 'Lều 6 người', 'Lều 8 người', 'Lều 12 người'];
+
+  // Filter products based on selectedType and subcate
+  const filteredProducts = products.filter(product => {
+    if (selectedType === 'Tất cả lều') {
+      return product.categoryId === 1 && product.status === true;
+    } else {
+      return product.categoryId === 1 && product.status === true && product.subcate === selectedType;
+    }
+  }).slice(0, 8);
 
   return (
     <div style={{
@@ -53,12 +59,11 @@ const Tent = () => {
       <div style={{
         width: '60px',
         height: '4px',
-        // backgroundColor: '#f90',
         margin: '0 auto 40px',
       }}></div>
       <h1 style={{ marginTop: -40, paddingBottom: '20px' }}>____________________________________________________________________________________________________________________________</h1>
       <Space size="large" style={{ marginBottom: '20px', justifyContent: 'center', display: 'flex' }}>
-        {['Tất cả lều', 'Lều 2 người', 'Lều 4 người', 'Lều 6 người', 'Lều 8 người', 'Lều 12 người'].map(type => (
+        {tentTypes.map(type => (
           <Tag.CheckableTag
             key={type}
             checked={selectedType === type}

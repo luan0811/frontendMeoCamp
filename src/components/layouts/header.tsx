@@ -57,6 +57,9 @@ const Header = () => {
         <Link to="/admin/manage-users">Quản lý người dùng</Link>
       </Menu.Item>
       <Menu.Item key="4">
+        <Link to="/admin/manage-blogs">Quản lý bài viết</Link>
+      </Menu.Item>
+      <Menu.Item key="5">
         <Link to="/admin/manage-orders">Quản lý đơn đặt hàng</Link>
       </Menu.Item>
     </Menu>

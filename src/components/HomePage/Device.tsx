@@ -10,7 +10,7 @@ const { Title } = Typography;
 const Device = () => {
   const [products, setProducts] = useState<Product1[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedType, setSelectedType] = useState<string>('All Products');
+  const [selectedType, setSelectedType] = useState<string>('Tất cả thiết bị');
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -26,9 +26,16 @@ const Device = () => {
     setSelectedType(type);
   };
 
-  const filteredProducts = selectedType === 'All Products' || selectedType === 'Tất cả thiết bị'
-    ? products.filter(product => product.categoryId === 3 && product.status === true).slice(0, 8)
-    : products.filter(product => product.categoryId === parseInt(selectedType) && product.status === true).slice(0, 8);
+  const deviceTypes = ['Tất cả thiết bị', 'Nấu ăn', 'Y tế', 'Tổ chức', 'Vệ sinh', 'Di chuyển'];
+
+  // Filter products based on selectedType and subcate
+  const filteredProducts = products.filter(product => {
+    if (selectedType === 'Tất cả thiết bị') {
+      return product.categoryId === 3 && product.status === true;
+    } else {
+      return product.categoryId === 3 && product.status === true && product.subcate === selectedType;
+    }
+  }).slice(0, 8);
 
   return (
     <div style={{
@@ -53,7 +60,7 @@ const Device = () => {
         ____________________________________________________________________________________________________________________________
       </h1>
       <Space size="large" style={{ marginBottom: '20px', justifyContent: 'center', display: 'flex' }}>
-        {['Tất cả thiết bị', 'Nấu ăn', 'Y tế', 'Tổ chức', 'Vệ sinh', 'Di chuyển'].map(type => (
+        {deviceTypes.map(type => (
           <Tag.CheckableTag
             key={type}
             checked={selectedType === type}
@@ -118,7 +125,6 @@ const Device = () => {
       <div style={{
         width: '60px',
         height: '4px',
-        // backgroundColor: '#f90',
         margin: '0 auto 40px',
       }}></div>
     </div>

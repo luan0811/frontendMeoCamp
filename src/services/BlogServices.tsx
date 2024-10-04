@@ -102,4 +102,3 @@ export const getCustomerMap = async (): Promise<Map<number, string>> => {
     throw error;
   }
 };
-

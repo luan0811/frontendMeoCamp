@@ -10,7 +10,7 @@ const { Title } = Typography;
 const Accessory = () => {
   const [products, setProducts] = useState<Product1[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedType, setSelectedType] = useState<string>('All Products');
+  const [selectedType, setSelectedType] = useState<string>('Tất cả phụ kiện');
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -26,10 +26,16 @@ const Accessory = () => {
     setSelectedType(type);
   };
 
-  // Filter products where the type is "Accessory" and limit to 8 cards
-  const filteredProducts = selectedType === 'All Products' || selectedType === 'Tất cả phụ kiện'
-    ? products.filter(product => product.categoryId === 2 && product.status === true).slice(0, 8)
-    : products.filter(product => product.categoryId === parseInt(selectedType) && product.status === true).slice(0, 8);
+  const accessoryTypes = ['Tất cả phụ kiện', 'Túi', 'Găng tay', 'Giày/Ủng', 'Mũ', 'Đèn pin'];
+
+  // Filter products based on selectedType and subcate
+  const filteredProducts = products.filter(product => {
+    if (selectedType === 'Tất cả phụ kiện') {
+      return product.categoryId === 2 && product.status === true;
+    } else {
+      return product.categoryId === 2 && product.status === true && product.subcate === selectedType;
+    }
+  }).slice(0, 8);
 
   return (
     <div style={{
@@ -52,7 +58,7 @@ const Accessory = () => {
       </Title>
       <h1 style={{ marginTop: -40, paddingBottom: '20px' }}>____________________________________________________________________________________________________________________________</h1>
       <Space size="large" style={{ marginBottom: '20px', justifyContent: 'center', display: 'flex' }}>
-        {['Tất cả phụ kiện', 'Túi', 'Găng tay', 'Giày/Ủng', 'Mũ', 'Đèn pin'].map(type => (
+        {accessoryTypes.map(type => (
           <Tag.CheckableTag
             key={type}
             checked={selectedType === type}
@@ -66,7 +72,7 @@ const Accessory = () => {
               fontSize: '16px',
               margin: '5px',
               transition: 'all 0.3s ease',
-              // boxShadow: selectedType === type ? '0 5px 15px rgba(255, 153, 0, 0.4)' : 'none',
+              boxShadow: selectedType === type ? '0 5px 15px rgba(255, 153, 0, 0.4)' : 'none',
             }}
           >
             {type}
@@ -116,7 +122,6 @@ const Accessory = () => {
       <div style={{
         width: '60px',
         height: '4px',
-        // backgroundColor: '#f90',
         margin: '0 auto 40px',
       }}></div>
     </div>

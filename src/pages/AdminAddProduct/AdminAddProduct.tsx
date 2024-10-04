@@ -18,7 +18,6 @@ interface ProductData {
     images: string[];
     quantity: number;
     subcate: string;
-    // Bỏ các trường không cần thiết như createdAt, updatedAt, rate
 }
 
 const AddProductForm = () => {
@@ -63,12 +62,14 @@ const AddProductForm = () => {
     const handleConfirm = async () => {
         if (!productData) return;
         try {
+            console.log("Sending product data:", productData); // Thêm dòng này để log dữ liệu trước khi gửi
             await AdminServices.addNewProduct(productData);
             Modal.success({ title: 'Sản phẩm đã được thêm thành công!' });
             form.resetFields();
             setPreviewVisible(false);
             setImageUrls([]);
         } catch (error: any) {
+            console.error("Error details:", error); // Thêm dòng này để log chi tiết lỗi
             Modal.error({ title: 'Thêm sản phẩm thất bại', content: error.message });
         }
     };
@@ -191,7 +192,6 @@ const AddProductForm = () => {
                         <p><strong>Số lượng:</strong> {productData.quantity}</p>
                         <p><strong>Danh mục:</strong> {productData.categoryId}</p>
                         <p><strong>Có thể thuê:</strong> {productData.isRentable ? 'Có' : 'Không'}</p>
-                        <p><strong>Danh mục phụ:</strong> {productData.subcate}</p>
                         {productData.images.length > 0 && (
                             <div>
                                 {productData.images.map((url, index) => (
