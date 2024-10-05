@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Card, Col, Row, Input, Typography, Skeleton, Button } from 'antd';
+import { Card, Col, Row, Input, Typography, Skeleton, Button, Pagination } from 'antd';
 import { getAllBlogs, getCustomerMap } from '../../services/BlogServices';
 import { useNavigate } from 'react-router-dom';
 import { PlusOutlined } from '@ant-design/icons';
@@ -16,6 +16,7 @@ interface Blog {
     image: string;
     post_date: string;
     customerId: number;
+    status: boolean;
 }
 
 function BlogPage() {
@@ -24,7 +25,8 @@ function BlogPage() {
     const [filteredBlogs, setFilteredBlogs] = useState<Blog[]>([]);
     const [loading, setLoading] = useState(true);
     const [customerMap, setCustomerMap] = useState<Map<number, string>>(new Map());
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 10;
 
     // Fetch all blogs on component mount
     useEffect(() => {
@@ -35,8 +37,9 @@ function BlogPage() {
                     getAllBlogs(),
                     getCustomerMap()
                 ]);
-                setBlogs(allBlogs);
-                setFilteredBlogs(allBlogs);
+                const activeBlogs = allBlogs.filter(blog => blog.status === true);
+                setBlogs(activeBlogs);
+                setFilteredBlogs(activeBlogs);
                 setCustomerMap(customerMap);
             } catch (error) {
                 console.error("Error fetching data", error);
@@ -53,12 +56,21 @@ function BlogPage() {
             blog.title.toLowerCase().includes(value.toLowerCase())
         );
         setFilteredBlogs(searchResult);
-
+        setCurrentPage(1); // Reset to first page when searching
     };
 
     const handleViewBlog = (blogId: number) => {
         navigate(`/blog/${blogId}`);
     };
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+
+    const paginatedBlogs = filteredBlogs.slice(
+        (currentPage - 1) * pageSize,
+        currentPage * pageSize
+    );
 
     return (
         <div style={{ padding: '70px', backgroundColor: '#1e1e1e' }}>
@@ -81,7 +93,7 @@ function BlogPage() {
             <Row gutter={[16, 16]}>
                 {loading ? (
                     // Skeleton loading
-                    Array.from({ length: 8 }).map((_, index) => (
+                    Array.from({ length: pageSize }).map((_, index) => (
                         <Col xs={24} sm={12} md={8} lg={6} key={index}>
                             <Card
                                 style={{ width: '100%', marginTop: 16 }}
@@ -93,7 +105,7 @@ function BlogPage() {
                     ))
                 ) : (
                     // Actual blog posts
-                    filteredBlogs.map(blog => (
+                    paginatedBlogs.map(blog => (
                         <Col xs={24} sm={12} md={8} lg={6} key={blog.id}>
                             <Card
                                 hoverable
@@ -134,6 +146,16 @@ function BlogPage() {
                     ))
                 )}
             </Row>
+            <div style={{ marginTop: '30px', textAlign: 'center' }}>
+                <Pagination
+                    current={currentPage}
+                    total={filteredBlogs.length}
+                    pageSize={pageSize}
+                    onChange={handlePageChange}
+                    showSizeChanger={false}
+                    style={{ color: 'white' }}
+                />
+            </div>
         </div>
     );
 }

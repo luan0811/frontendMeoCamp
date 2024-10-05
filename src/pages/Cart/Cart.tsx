@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Table, Button, Space, Typography, Tag, message } from 'antd';
 import { getCartItems, CartItem } from '../../services/CartServices';
+import { checkout } from '../../services/OrderServices';
 
 const { Title } = Typography;
 
@@ -8,27 +9,52 @@ const Cart: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      const userId = localStorage.getItem('userId');
-      if (!userId) {
-        message.error('Vui lòng đăng nhập để xem giỏ hàng');
-        setLoading(false);
-        return;
-      }
+  const fetchCartItems = useCallback(async () => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      message.error('Vui lòng đăng nhập để xem giỏ hàng');
+      setLoading(false);
+      return;
+    }
 
-      try {
-        const items = await getCartItems(parseInt(userId));
-        setCartItems(items);
-      } catch (error) {
-        message.error('Không có sản phẩm trong giỏ hàng');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCartItems();
+    try {
+      const items = await getCartItems(parseInt(userId));
+      setCartItems(items);
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+      message.error('Không thể tải giỏ hàng');
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchCartItems();
+  }, [fetchCartItems]);
+
+  const handleCheckout = async () => {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      message.error('Vui lòng đăng nhập để thanh toán');
+      return;
+    }
+
+    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    try {
+      await checkout({
+        customerId: parseInt(userId),
+        paymentMethod: 'Cash', // Bạn có thể thay đổi phương thức thanh toán tùy ý
+        amount: total
+      });
+      message.success('Thanh toán thành công!');
+      // Sau khi thanh toán thành công, làm mới giỏ hàng
+      fetchCartItems();
+    } catch (error) {
+      console.error('Error during checkout:', error);
+      message.error('Có lỗi xảy ra trong quá trình thanh toán');
+    }
+  };
 
   const columns = [
     {
@@ -46,7 +72,6 @@ const Cart: React.FC = () => {
       title: 'Số lượng',
       dataIndex: 'quantity',
       key: 'quantity',
-      render: (quantity: number) => quantity,
     },
     {
       title: 'Tổng',
@@ -77,7 +102,9 @@ const Cart: React.FC = () => {
         </Space>
       </div>
       <div style={{ marginTop: '24px', textAlign: 'right' }}>
-        <Button type="primary" size="large">Thanh toán</Button>
+        <Button type="primary" size="large" onClick={handleCheckout}>
+          Thanh toán
+        </Button>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ interface Blog {
   image: string;
   post_date: string;
   customerId: number;
+  status: boolean;
   // Add other relevant blog fields
 }
 
