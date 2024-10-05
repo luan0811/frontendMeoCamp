@@ -43,3 +43,12 @@ export const getCartItems = async (customerId: number): Promise<CartItem[]> => {
     }
 };
 
+export const removeFromCart = async (productId: number) => {
+    try {
+        await axios.delete(`${API_BE_URL}api/ShoppingCarts/remove-from-cart/${productId}`);
+    } catch (error) {
+        console.error('Error removing from cart:', error);
+        throw error;
+    }
+};
+

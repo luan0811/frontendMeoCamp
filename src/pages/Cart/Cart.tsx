@@ -1,13 +1,19 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Table, Button, Space, Typography, Tag, message } from 'antd';
-import { getCartItems, CartItem } from '../../services/CartServices';
+import { Table, Button, Space, Typography, Tag, message, Popconfirm, Modal, Radio, Image } from 'antd';
+import { DeleteOutlined } from '@ant-design/icons';
+import { getCartItems, CartItem, removeFromCart } from '../../services/CartServices';
 import { checkout } from '../../services/OrderServices';
-
+import momo from '../../assets/img/momoCuaLuan.png'
 const { Title } = Typography;
 
 const Cart: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isDeliveryModalVisible, setIsDeliveryModalVisible] = useState(false);
+  const [isPaymentModalVisible, setIsPaymentModalVisible] = useState(false);
+  const [deliveryMethod, setDeliveryMethod] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('');
+  const [isMomoModalVisible, setIsMomoModalVisible] = useState(false);
 
   const fetchCartItems = useCallback(async () => {
     const userId = localStorage.getItem('userId');
@@ -32,6 +38,28 @@ const Cart: React.FC = () => {
     fetchCartItems();
   }, [fetchCartItems]);
 
+  const showDeliveryModal = () => {
+    setIsDeliveryModalVisible(true);
+  };
+
+  const handleDeliveryOk = () => {
+    if (deliveryMethod) {
+      setIsDeliveryModalVisible(false);
+      setIsPaymentModalVisible(true);
+    } else {
+      message.error('Vui lòng chọn phương thức nhận hàng');
+    }
+  };
+
+  const handlePaymentOk = () => {
+    if (paymentMethod === 'Cash') {
+      handleCheckout();
+    } else if (paymentMethod === 'E-Wallet') {
+      setIsPaymentModalVisible(false);
+      setIsMomoModalVisible(true);
+    }
+  };
+
   const handleCheckout = async () => {
     const userId = localStorage.getItem('userId');
     if (!userId) {
@@ -44,15 +72,28 @@ const Cart: React.FC = () => {
     try {
       await checkout({
         customerId: parseInt(userId),
-        paymentMethod: 'Cash', // Bạn có thể thay đổi phương thức thanh toán tùy ý
-        amount: total
+        paymentMethod: paymentMethod,
+        amount: total,
+        deliveryAddress: deliveryMethod,
       });
       message.success('Thanh toán thành công!');
-      // Sau khi thanh toán thành công, làm mới giỏ hàng
       fetchCartItems();
+      setIsPaymentModalVisible(false);
+      setIsMomoModalVisible(false);
     } catch (error) {
       console.error('Error during checkout:', error);
       message.error('Có lỗi xảy ra trong quá trình thanh toán');
+    }
+  };
+
+  const handleRemoveItem = async (cartItemId: number) => {
+    try {
+      await removeFromCart(cartItemId);
+      message.success('Đã xóa sản phẩm khỏi giỏ hàng');
+      fetchCartItems(); // Cập nhật lại giỏ hàng sau khi xóa
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+      message.error('Không thể xóa sản phẩm khỏi giỏ hàng');
     }
   };
 
@@ -87,6 +128,22 @@ const Cart: React.FC = () => {
         </Tag>
       ),
     },
+    {
+      title: 'Hành động',
+      key: 'action',
+      render: (_text: string, record: CartItem) => (
+        <Popconfirm
+          title="Bạn có chắc chắn muốn xóa sản phẩm này?"
+          onConfirm={() => handleRemoveItem(record.id)}
+          okText="Có"
+          cancelText="Không"
+        >
+          <Button type="link" danger icon={<DeleteOutlined />}>
+            Xóa
+          </Button>
+        </Popconfirm>
+      ),
+    },
   ];
 
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -102,10 +159,48 @@ const Cart: React.FC = () => {
         </Space>
       </div>
       <div style={{ marginTop: '24px', textAlign: 'right' }}>
-        <Button type="primary" size="large" onClick={handleCheckout}>
+        <Button type="primary" size="large" onClick={showDeliveryModal}>
           Thanh toán
         </Button>
       </div>
+
+      <Modal
+        title="Chọn phương thức nhận hàng"
+        visible={isDeliveryModalVisible}
+        onOk={handleDeliveryOk}
+        onCancel={() => setIsDeliveryModalVisible(false)}
+      >
+        <Radio.Group onChange={(e) => setDeliveryMethod(e.target.value)} value={deliveryMethod}>
+          <Space direction="vertical">
+            <Radio value="FPT University">Nhận tại đại học FPT</Radio>
+            <Radio value="Student Cultural House">Nhận tại nhà văn hóa sinh viên</Radio>
+            <Radio value="Home Delivery" disabled>Giao hàng tận nhà</Radio>
+          </Space>
+        </Radio.Group>
+      </Modal>
+
+      <Modal
+        title="Chọn phương thức thanh toán"
+        visible={isPaymentModalVisible}
+        onOk={handlePaymentOk}
+        onCancel={() => setIsPaymentModalVisible(false)}
+      >
+        <Radio.Group onChange={(e) => setPaymentMethod(e.target.value)} value={paymentMethod}>
+          <Space direction="vertical">
+            <Radio value="Cash">Tiền mặt</Radio>
+            <Radio value="E-Wallet">Ví điện tử/ ngân hàng</Radio>
+          </Space>
+        </Radio.Group>
+      </Modal>
+
+      <Modal
+        title="Quét mã QR để thanh toán"
+        visible={isMomoModalVisible}
+        onOk={handleCheckout}
+        onCancel={() => setIsMomoModalVisible(false)}
+      >
+        <Image src={momo} alt="Momo QR Code" />
+      </Modal>
     </div>
   );
 };

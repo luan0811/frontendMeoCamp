@@ -6,6 +6,7 @@ interface CheckoutRequest {
   customerId: number;
   paymentMethod: string;
   amount: number;
+  deliveryAddress: string;
 }
 
 export interface OrderResponse {
@@ -16,6 +17,7 @@ export interface OrderResponse {
   orderStatus: string;
   createdAt: string;
   updatedAt: string;
+  deliveryAddress: string;
 }
 
 export const checkout = async (checkoutData: CheckoutRequest): Promise<OrderResponse> => {
