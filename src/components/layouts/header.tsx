@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import logo from '../../assets/img/logo_cam.png';
 import avatar from '../../assets/img/avt.png';
+import { getCartItems } from '../../services/CartServices';
 
 const { Header: AntHeader } = Layout;
 
@@ -11,6 +12,7 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
+  const [cartItemCount, setCartItemCount] = useState(0);
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
@@ -27,6 +29,23 @@ const Header = () => {
       console.error('Error parsing user data:', error);
       localStorage.removeItem('user');
     }
+
+    // Add this new effect to fetch cart items
+    const fetchCartItemCount = async () => {
+      if (loggedIn && role !== 'Admin') {
+        try {
+          const userId = localStorage.getItem('userId');
+          if (userId) {
+            const items = await getCartItems(parseInt(userId));
+            setCartItemCount(items.length);
+          }
+        } catch (error) {
+          console.error('Error fetching cart items:', error);
+        }
+      }
+    };
+
+    fetchCartItemCount();
   }, []);
 
   const handleMenuClick = (e: any) => {
@@ -107,7 +126,7 @@ const Header = () => {
       <div style={{ display: 'flex', alignItems: 'center' }}>
         {isLoggedIn && role !== 'Admin' && (
           <Link to="/cart" style={{ marginRight: '16px' }}>
-            <Badge count={5}>
+            <Badge count={cartItemCount}>
               <ShoppingCartOutlined style={{ fontSize: '24px', color: '#1890ff' }} />
             </Badge>
           </Link>

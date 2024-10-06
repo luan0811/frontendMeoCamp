@@ -124,7 +124,7 @@ const Cart: React.FC = () => {
       key: 'status',
       render: (record: CartItem) => (
         <Tag color={record.rentalPrice ? 'blue' : 'green'}>
-          {record.rentalPrice ? 'Thuê' : 'Mua'}
+          {record.rentalPrice ? 'Mua' : 'Thuê'}
         </Tag>
       ),
     },

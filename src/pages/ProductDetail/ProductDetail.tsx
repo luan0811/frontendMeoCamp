@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Rate, Radio, Typography, Row, Col, Skeleton, Tag, message } from "antd";
 import { getProductDetail, Product1 } from "../../services/ProductServices";
-import { addToCart, getCartItems } from "../../services/CartServices";
+import { addToCart } from "../../services/CartServices";
 import "./ProductDetail.css";
 
 const { Title, Paragraph } = Typography;
@@ -14,6 +14,7 @@ const ProductDetail = () => {
   const [rentDuration, setRentDuration] = useState(1);
   const [mainImage, setMainImage] = useState<string>("");
 
+
   const handleAddToCart = async () => {
     const userId = localStorage.getItem('userId');
     if (!userId) {
@@ -24,10 +25,6 @@ const ProductDetail = () => {
     try {
       await addToCart(parseInt(userId), parseInt(id!), 1);
       message.success('Đã thêm sản phẩm vào giỏ hàng');
-
-      // Lấy và log toàn bộ cart items
-      const cartItems = await getCartItems(parseInt(userId));
-      console.log('Cart items after adding:', cartItems);
     } catch (error) {
       message.error('Không thể thêm sản phẩm vào giỏ hàng');
     }

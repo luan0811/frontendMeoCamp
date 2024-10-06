@@ -40,3 +40,22 @@ export const getAllOrders = async (): Promise<OrderResponse[]> => {
   }
 };
 
+export const updateOrderStatus = async (orderId: number, newStatus: string): Promise<OrderResponse> => {
+  try {
+    // Đầu tiên, lấy thông tin hiện tại của đơn hàng
+    const currentOrder = await axios.get<OrderResponse>(`${API_BE_URL}api/Orders/${orderId}`);
+    
+    // Sau đó, cập nhật trạng thái mới
+    const response = await axios.put<OrderResponse>(`${API_BE_URL}api/Orders/${orderId}`, {
+      orderStatus: newStatus,
+      deliveryAddress: currentOrder.data.deliveryAddress, // Giữ nguyên địa chỉ giao hàng hiện tại
+      updatedAt: new Date().toISOString()
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error('Error updating order status:', error);
+    throw error;
+  }
+};
+

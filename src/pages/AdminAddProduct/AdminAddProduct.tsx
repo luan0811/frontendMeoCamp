@@ -87,6 +87,7 @@ const AddProductForm = () => {
 
     return (
         <div style={{ padding: '70px' }}>
+            <h1>Thêm sản phẩm</h1>
             <Form
                 form={form}
                 layout="vertical"
