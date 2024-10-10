@@ -130,20 +130,20 @@ const ProductDetail = () => {
             </Paragraph>
 
             {/* Đánh giá sản phẩm */}
-            <div className="product-rating">
+            {/* <div className="product-rating">
               <Title level={5}>Đánh giá sản phẩm này</Title>
               <Rate style={{ color: "#ff4d4f" }} defaultValue={product.rate} />
-            </div>
+            </div> */}
 
             {/* Mua hoặc Thuê */}
             {product.isRentable && (
               <div className="product-buy-rent">
-                <Radio.Group onChange={(e) => setRentDuration(e.target.value)} value={rentDuration}>
+                {/* <Radio.Group onChange={(e) => setRentDuration(e.target.value)} value={rentDuration}>
                   <Radio.Button value={1}>1 ngày</Radio.Button>
                   <Radio.Button value={2}>2 ngày</Radio.Button>
                   <Radio.Button value={3}>3 ngày</Radio.Button>
                   <Radio.Button value={4}>4 ngày</Radio.Button>
-                </Radio.Group>
+                </Radio.Group> */}
                 <div className="price-section">
                   <Title level={3} style={{ color: "#ff4d4f" }}>
                     {product.rentalPrice} VND/ngày

@@ -68,11 +68,21 @@ export const updateBlog = async (userId: number, updatedData: Partial<Blog>): Pr
 };
 
 // Delete a blog
-export const deleteBlog = async (userId: number): Promise<void> => {
+export const deleteBlogbyId = async (blogId: number): Promise<void> => {
   try {
-    await axios.delete(`${API_BE_URL}Blog/DeleteBlog/${userId}`);
+    await axios.delete(`${API_BE_URL}Blog/DeleteBlog/${blogId}`);
   } catch (error) {
-    console.error(`Error deleting blog for user ID: ${userId}`, error);
+    console.error(`Error deleting blog for user ID: ${blogId}`, error);
+    throw error;
+  }
+};
+
+//Approve a blog
+export const approveBlog = async (blogId: number): Promise<void> => {
+  try {
+    await axios.put(`${API_BE_URL}Blog/ApproveBlog/${blogId}`);
+  } catch (error) {
+    console.error(`Error approving blog for user ID: ${blogId}`, error);
     throw error;
   }
 };
@@ -103,3 +113,5 @@ export const getCustomerMap = async (): Promise<Map<number, string>> => {
     throw error;
   }
 };
+
+

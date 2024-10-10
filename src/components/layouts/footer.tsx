@@ -1,9 +1,7 @@
 import { Layout, Space, Row, Col } from "antd";
 import {
   FacebookOutlined,
-  InstagramOutlined,
   TikTokOutlined,
-  XOutlined,
   MailOutlined,
   PhoneOutlined,
 } from "@ant-design/icons";
@@ -50,25 +48,11 @@ const Footer = () => {
               <FacebookOutlined style={{ fontSize: "24px", color: "#fff" }} />
             </Link>
             <Link
-              to="https://www.instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <InstagramOutlined style={{ fontSize: "24px", color: "#fff" }} />
-            </Link>
-            <Link
-              to="https://www.tiktok.com"
+              to="https://www.tiktok.com/@mo.camp0"
               target="_blank"
               rel="noopener noreferrer"
             >
               <TikTokOutlined style={{ fontSize: "24px", color: "#fff" }} />
-            </Link>
-            <Link
-              to="https://www.x.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <XOutlined style={{ fontSize: "24px", color: "#fff" }} />
             </Link>
           </Space>
         </Col>

@@ -1,12 +1,28 @@
 import { Form, Input, Button } from "antd";
 import { MailOutlined, PhoneOutlined } from "@ant-design/icons";
+import { createContact } from "../../services/ContactServices";
+import { message } from "antd";
 import "./ContactUs.css";
 
 const ContactUs = () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    console.log("Form values: ", values);
+  const onFinish = async (values: any) => {
+    try {
+      const contactData = {
+        id: 0, // This will be assigned by the backend
+        user_name: values.name,
+        mail: values.email,
+        phone: values.phone,
+        description: values.message
+      };
+      await createContact(contactData);
+      message.success('Bạn đã gửi thông tin thành công!');
+      form.resetFields();
+    } catch (error) {
+      console.error('Error sending contact:', error);
+      message.error('Gửi thông tin thất bại. Vui lòng thử lại.');
+    }
   };
 
   return (
@@ -97,7 +113,7 @@ const ContactUs = () => {
         <p>
           Để biết thêm thông tin, nhận hỗ trợ kỹ thuật hoặc thảo luận về cơ hội
           hợp tác, hãy liên hệ với chúng tôi qua thông tin được cung cấp hoặc ở
-          bản bên trái. Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn một cách
+          bảng bên trái. Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn một cách
           tốt nhất. Hãy để chúng tôi đồng hành cùng bạn trên con đường phát
           triển!
         </p>

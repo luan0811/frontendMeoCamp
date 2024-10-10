@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Table, message } from 'antd';
-import { getAllBlogs, getCustomerMap } from '../../services/BlogServices';
+import { Table, message, Button, Space, Popconfirm } from 'antd';
+import { getAllBlogs, getCustomerMap, approveBlog, deleteBlogbyId } from '../../services/BlogServices';
 
 interface Blog {
   id: number;
@@ -9,6 +9,7 @@ interface Blog {
   image: string;
   post_date: string;
   customerId: number;
+  status: boolean;
 }
 
 function AdminManageBlog() {
@@ -38,12 +39,39 @@ function AdminManageBlog() {
     }
   };
 
+  const handleApprove = async (id: number) => {
+    try {
+      await approveBlog(id);
+      message.success('Blog approved successfully');
+      fetchBlogs(); // Refresh the blog list
+    } catch (error) {
+      message.error('Failed to approve blog');
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteBlogbyId(id);
+      message.success('Blog deleted successfully');
+      fetchBlogs(); // Refresh the blog list
+    } catch (error) {
+      message.error('Failed to delete blog');
+    }
+  };
 
   const columns = [
     {
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
+    },
+    {
+      title: 'Image',
+      dataIndex: 'image',
+      key: 'image',
+      render: (image: string) => (
+        <img src={image} alt="Blog" style={{ width: '100px', height: 'auto' }} />
+      ),
     },
     {
       title: 'Content',
@@ -62,7 +90,33 @@ function AdminManageBlog() {
       key: 'customerId',
       render: (customerId: number) => customerMap.get(customerId) || 'Unknown',
     },
-
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: (status: boolean) => status ? 'Approved' : 'Pending',
+    },
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (_: any, record: Blog) => (
+        <Space>
+          {!record.status && (
+            <Button onClick={() => handleApprove(record.id)} type="primary">
+              Approve
+            </Button>
+          )}
+          <Popconfirm
+            title="Are you sure you want to delete this blog?"
+            onConfirm={() => handleDelete(record.id)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger>Delete</Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
   ];
 
   return (
