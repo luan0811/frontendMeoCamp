@@ -2,6 +2,14 @@ import axios from 'axios';
 
 const API_BE_URL = import.meta.env.VITE_API_BE_URL;
 
+// Tạo instance Axios với cấu hình mặc định
+const axiosInstance = axios.create({
+  baseURL: API_BE_URL,
+  headers: {
+    'ngrok-skip-browser-warning': '69420'
+  }
+});
+
 export interface CartItem {
     id: number;
     productId: number;
@@ -25,7 +33,7 @@ export const addToCart = async (customerId: number, productId: number, quantity:
             productId,
             quantity
         };
-        const response = await axios.post(`${API_BE_URL}api/ShoppingCarts/add-to-cart`, request);
+        const response = await axiosInstance.post('api/ShoppingCarts/add-to-cart', request);
         return response.data;
     } catch (error) {
         console.error('Error adding to cart:', error);
@@ -35,7 +43,7 @@ export const addToCart = async (customerId: number, productId: number, quantity:
 
 export const getCartItems = async (customerId: number): Promise<CartItem[]> => {
     try {
-        const response = await axios.get<CartItem[]>(`${API_BE_URL}api/ShoppingCarts/cart-items/${customerId}`);
+        const response = await axiosInstance.get<CartItem[]>(`api/ShoppingCarts/cart-items/${customerId}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching cart items:', error);
@@ -45,10 +53,9 @@ export const getCartItems = async (customerId: number): Promise<CartItem[]> => {
 
 export const removeFromCart = async (productId: number) => {
     try {
-        await axios.delete(`${API_BE_URL}api/ShoppingCarts/remove-from-cart/${productId}`);
+        await axiosInstance.delete(`api/ShoppingCarts/remove-from-cart/${productId}`);
     } catch (error) {
         console.error('Error removing from cart:', error);
         throw error;
     }
 };
-

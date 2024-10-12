@@ -2,8 +2,13 @@ import axios from 'axios';
 
 const API_BE_URL = import.meta.env.VITE_API_BE_URL;
 
-
-
+// Tạo một instance Axios với cấu hình mặc định
+const axiosInstance = axios.create({
+  baseURL: API_BE_URL,
+  headers: {
+    'ngrok-skip-browser-warning': '69420'
+  }
+});
 
 // Định nghĩa kiểu dữ liệu cho Product
 export interface Product1 {
@@ -36,14 +41,26 @@ const CATEGORY_MAP: { [key: number]: string } = {
 // Hàm lấy tất cả sản phẩm
 export const getAllProduct = async (): Promise<Product1[]> => {
   try {
-    const response = await axios.get<Product1[]>(`${API_BE_URL}Product/getAll`); // Thay bằng URL thật của API
-    const products = response.data.map((product) => {
+    const response = await axiosInstance.get<Product1[] | { data: Product1[] }>('Product/getAll');
+    
+    // Kiểm tra cấu trúc của response.data
+    let productsData: Product1[];
+    if (Array.isArray(response.data)) {
+      productsData = response.data;
+    } else if (response.data && Array.isArray(response.data.data)) {
+      productsData = response.data.data;
+    } else {
+      console.error('Unexpected response structure:', response.data);
+      return [];
+    }
+
+    const products = productsData.map((product) => {
       return {
         ...product,
-        categoryName: CATEGORY_MAP[product.categoryId], // Thêm tên category dựa vào categoryId
+        categoryName: CATEGORY_MAP[product.categoryId],
       };
     });
-    console.log(products)
+    console.log(products);
     return products;
   } catch (error) {
     console.error('Error fetching products', error);
@@ -51,10 +68,10 @@ export const getAllProduct = async (): Promise<Product1[]> => {
   }
 };
 
-// Update the getProductDetail function to return Product1
+// Cập nhật các hàm khác để sử dụng axiosInstance
 export const getProductDetail = async (id: string): Promise<Product1 | null> => {
   try {
-    const response = await axios.get<Product1>(`${API_BE_URL}Product/${id}`);
+    const response = await axiosInstance.get<Product1>(`Product/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Error fetching product with id ${id}:`, error);
@@ -64,17 +81,17 @@ export const getProductDetail = async (id: string): Promise<Product1 | null> => 
 
 export const deleteProduct = async (id: string): Promise<Product1 | null> => {
   try {
-    const response = await axios.delete<Product1>(`${API_BE_URL}Product/${id}`);
+    const response = await axiosInstance.delete<Product1>(`Product/${id}`);
     return response.data;
   } catch (error) {
-    console.error(`Error fetching product with id ${id}:`, error);
+    console.error(`Error deleting product with id ${id}:`, error);
     return null;
   }
 };
 
 export const updateProduct = async (id: string, updatedProduct: Product1): Promise<Product1 | null> => {
   try {
-    const response = await axios.put<Product1>(`${API_BE_URL}Product/${id}`, updatedProduct);
+    const response = await axiosInstance.put<Product1>(`Product/${id}`, updatedProduct);
     return response.data;
   } catch (error) {
     console.error(`Error updating product with id ${id}:`, error);

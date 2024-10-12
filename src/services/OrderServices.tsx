@@ -2,6 +2,14 @@ import axios from 'axios';
 
 const API_BE_URL = import.meta.env.VITE_API_BE_URL;
 
+// Tạo instance Axios với cấu hình mặc định
+const axiosInstance = axios.create({
+  baseURL: API_BE_URL,
+  headers: {
+    'ngrok-skip-browser-warning': '69420'
+  }
+});
+
 interface CheckoutRequest {
   customerId: number;
   paymentMethod: string;
@@ -22,7 +30,7 @@ export interface OrderResponse {
 
 export const checkout = async (checkoutData: CheckoutRequest): Promise<OrderResponse> => {
   try {
-    const response = await axios.post<OrderResponse>(`${API_BE_URL}api/Orders/checkout`, checkoutData);
+    const response = await axiosInstance.post<OrderResponse>('api/Orders/checkout', checkoutData);
     return response.data;
   } catch (error) {
     console.error('Error during checkout:', error);
@@ -32,7 +40,7 @@ export const checkout = async (checkoutData: CheckoutRequest): Promise<OrderResp
 
 export const getAllOrders = async (): Promise<OrderResponse[]> => {
   try {
-    const response = await axios.get<OrderResponse[]>(`${API_BE_URL}api/Orders`);
+    const response = await axiosInstance.get<OrderResponse[]>('api/Orders');
     return response.data;
   } catch (error) {
     console.error('Error fetching orders:', error);
@@ -43,12 +51,12 @@ export const getAllOrders = async (): Promise<OrderResponse[]> => {
 export const updateOrderStatus = async (orderId: number, newStatus: string): Promise<OrderResponse> => {
   try {
     // Đầu tiên, lấy thông tin hiện tại của đơn hàng
-    const currentOrder = await axios.get<OrderResponse>(`${API_BE_URL}api/Orders/${orderId}`);
+    const currentOrder = await axiosInstance.get<OrderResponse>(`api/Orders/${orderId}`);
     
     // Sau đó, cập nhật trạng thái mới
-    const response = await axios.put<OrderResponse>(`${API_BE_URL}api/Orders/${orderId}`, {
+    const response = await axiosInstance.put<OrderResponse>(`api/Orders/${orderId}`, {
       orderStatus: newStatus,
-      deliveryAddress: currentOrder.data.deliveryAddress, // Giữ nguyên địa chỉ giao hàng hiện tại
+      deliveryAddress: currentOrder.data.deliveryAddress,
       updatedAt: new Date().toISOString()
     });
     
@@ -58,4 +66,3 @@ export const updateOrderStatus = async (orderId: number, newStatus: string): Pro
     throw error;
   }
 };
-

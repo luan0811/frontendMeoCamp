@@ -33,17 +33,6 @@ function AdminGetAllUsers() {
         }
     };
 
-    // const handleDelete = (id: number) => {
-    //     Modal.confirm({
-    //         title: 'Bạn có chắc chắn muốn xóa khách hàng này?',
-    //         content: 'Hành động này không thể hoàn tác.',
-    //         onOk() {
-    //             // Implement delete logic here
-    //             message.success('Đã xóa khách hàng');
-    //         },
-    //     });
-    // };
-
     const columns: ColumnsType<Customer> = [
         {
             title: 'ID',
