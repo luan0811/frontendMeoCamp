@@ -30,7 +30,7 @@ const AdminUpdateProduct = () => {
           isRentable: product.isRentable,
           status: product.status,
         });
-        setImageUrls(product.image.split(',')); // Giả định rằng image là chuỗi ngăn cách bằng dấu phẩy
+        setImageUrls(product.images); // Giả định rằng image là chuỗi ngăn cách bằng dấu phẩy
       }
     };
 

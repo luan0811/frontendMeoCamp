@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Space, Button, Modal, message } from 'antd';
+import { useState, useEffect } from 'react';
+import { Table, Space, Button, message } from 'antd';
 import { getAllCustomer } from '../../services/AuthServices';
 import { ColumnsType } from 'antd/es/table';
 
@@ -83,7 +83,7 @@ function AdminGetAllUsers() {
         {
             title: 'Hành động',
             key: 'action',
-            render: (_, record) => (
+            render: (_, _record) => (
                 <Space size="middle">
                     <Button type="primary" onClick={() => message.info('Chức năng chỉnh sửa chưa được triển khai')}>
                         Chỉnh sửa
