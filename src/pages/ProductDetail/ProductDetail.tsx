@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Rate, Radio, Typography, Row, Col, Skeleton, Tag, message } from "antd";
+import { Button, Typography, Row, Col, Skeleton, Tag, message } from "antd";
 import { getProductDetail, Product1 } from "../../services/ProductServices";
 import { addToCart } from "../../services/CartServices";
 import "./ProductDetail.css";
@@ -11,7 +11,6 @@ const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState<Product1 | null>(null);
   const [loading, setLoading] = useState(true);
-  const [rentDuration, setRentDuration] = useState(1);
   const [mainImage, setMainImage] = useState<string>("");
 
 
