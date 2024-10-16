@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Table, Button, Space, Typography, Tag, message, Popconfirm, Modal, Radio, Image } from 'antd';
+import { Table, Button, Space, Typography, Tag, message, Popconfirm, Modal, Radio, Image, Input } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import { getCartItems, CartItem, removeFromCart } from '../../services/CartServices';
 import { checkout } from '../../services/OrderServices';
@@ -14,6 +14,7 @@ const Cart: React.FC = () => {
   const [deliveryMethod, setDeliveryMethod] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
   const [isMomoModalVisible, setIsMomoModalVisible] = useState(false);
+  const [customerAddress, setCustomerAddress] = useState('');
 
   const fetchCartItems = useCallback(async () => {
     const userId = localStorage.getItem('userId');
@@ -44,8 +45,12 @@ const Cart: React.FC = () => {
 
   const handleDeliveryOk = () => {
     if (deliveryMethod) {
-      setIsDeliveryModalVisible(false);
-      setIsPaymentModalVisible(true);
+      if (deliveryMethod === 'Home Delivery' && !customerAddress.trim()) {
+        message.error('Vui lòng nhập địa chỉ giao hàng');
+      } else {
+        setIsDeliveryModalVisible(false);
+        setIsPaymentModalVisible(true);
+      }
     } else {
       message.error('Vui lòng chọn phương thức nhận hàng');
     }
@@ -74,7 +79,7 @@ const Cart: React.FC = () => {
         customerId: parseInt(userId),
         paymentMethod: paymentMethod,
         amount: total,
-        deliveryAddress: deliveryMethod,
+        deliveryAddress: deliveryMethod === 'Home Delivery' ? customerAddress : deliveryMethod,
       });
       message.success('Thanh toán thành công!');
       fetchCartItems();
@@ -174,9 +179,17 @@ const Cart: React.FC = () => {
           <Space direction="vertical">
             <Radio value="FPT University">Nhận tại đại học FPT</Radio>
             <Radio value="Student Cultural House">Nhận tại nhà văn hóa sinh viên</Radio>
-            <Radio value="Home Delivery" disabled>Giao hàng tận nhà</Radio>
+            <Radio value="Home Delivery">Giao hàng tận nhà</Radio>
           </Space>
         </Radio.Group>
+        {deliveryMethod === 'Home Delivery' && (
+          <Input
+            style={{ marginTop: '10px' }}
+            placeholder="Nhập địa chỉ giao hàng"
+            value={customerAddress}
+            onChange={(e) => setCustomerAddress(e.target.value)}
+          />
+        )}
       </Modal>
 
       <Modal

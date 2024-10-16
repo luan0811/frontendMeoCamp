@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, message, Tabs, Table } from 'antd';
+import { Form, Input, Button, message, Tabs, Table, Space } from 'antd';
 import { updateUser, changePassword } from '../../services/AuthServices';
-import { getAllOrders, OrderResponse } from '../../services/OrderServices';
+import { getAllOrders, OrderResponse, updateOrderStatus } from '../../services/OrderServices';
 
 const { TabPane } = Tabs;
 
@@ -79,6 +79,20 @@ const Profile: React.FC = () => {
     }
   };
 
+  const handleOrderDelivered = async (orderId: number) => {
+    try {
+      await updateOrderStatus(orderId, 'Delivered');
+      message.success('Đã cập nhật trạng thái đơn hàng thành Đã giao hàng');
+      const userData = getUserDataFromLocalStorage();
+      if (userData) {
+        fetchUserOrders(userData.id);
+      }
+    } catch (error) {
+      console.error('Error updating order status:', error);
+      message.error('Không thể cập nhật trạng thái đơn hàng');
+    }
+  };
+
   const orderColumns = [
     {
       title: 'Ngày đặt hàng',
@@ -96,6 +110,24 @@ const Profile: React.FC = () => {
       title: 'Trạng thái',
       dataIndex: 'orderStatus',
       key: 'orderStatus',
+      render: (status: string, record: OrderResponse) => (
+        <Space>
+          {status}
+          {status === 'Approved' && (
+            <Button 
+              size="small" 
+              onClick={() => handleOrderDelivered(record.id)}
+            >
+              Đã nhận hàng
+            </Button>
+          )}
+        </Space>
+      ),
+    },
+    {
+      title: 'Địa chỉ giao hàng',
+      dataIndex: 'deliveryAddress',
+      key: 'deliveryAddress',
     },
   ];
 
@@ -197,7 +229,7 @@ const Profile: React.FC = () => {
           </Form>
         </TabPane>
 
-        {/* New Tab for User Orders */}
+        {/* Updated Tab for User Orders */}
         <TabPane tab="Đơn hàng của tôi" key="3">
           <Table
             columns={orderColumns}
