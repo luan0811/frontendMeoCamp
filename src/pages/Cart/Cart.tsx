@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Table, Button, Space, Typography, Tag, message, Popconfirm, Modal, Radio, Image, Input } from 'antd';
+import { Table, Button, Space, Typography, Tag, message, Popconfirm, Modal, Radio, Image, Input, InputNumber } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { getCartItems, CartItem, removeFromCart } from '../../services/CartServices';
+import { getCartItems, CartItem, removeFromCart, updateCartItemQuantity } from '../../services/CartServices';
 import { checkout } from '../../services/OrderServices';
 import momo from '../../assets/img/momoCuaLuan.png'
 const { Title } = Typography;
@@ -102,6 +102,21 @@ const Cart: React.FC = () => {
     }
   };
 
+  const handleQuantityChange = async (cartItemId: number, newQuantity: number) => {
+    try {
+      if (newQuantity < 1) {
+        message.error('Số lượng phải lớn hơn 0');
+        return;
+      }
+      await updateCartItemQuantity(cartItemId, newQuantity);
+      message.success('Đã cập nhật số lượng');
+      await fetchCartItems(); // Refresh cart after update
+    } catch (error) {
+      console.error('Error updating quantity:', error);
+      message.error('Không thể cập nhật số lượng');
+    }
+  };
+
   const columns = [
     {
       title: 'Sản phẩm',
@@ -118,6 +133,14 @@ const Cart: React.FC = () => {
       title: 'Số lượng',
       dataIndex: 'quantity',
       key: 'quantity',
+      render: (quantity: number, record: CartItem) => (
+        <InputNumber
+          min={1}
+          value={quantity}
+          onChange={(value) => handleQuantityChange(record.id, value || 1)}
+          style={{ width: '80px' }}
+        />
+      ),
     },
     {
       title: 'Tổng',
@@ -154,7 +177,7 @@ const Cart: React.FC = () => {
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <div style={{ padding: '50px' }}>
+    <div style={{ padding: '70px' }}>
       <Title level={2}>Giỏ hàng</Title>
       <Table columns={columns} dataSource={cartItems} pagination={false} loading={loading} />
       <div style={{ marginTop: '24px', textAlign: 'right' }}>

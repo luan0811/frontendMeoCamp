@@ -59,3 +59,12 @@ export const removeFromCart = async (productId: number) => {
         throw error;
     }
 };
+
+export const updateCartItemQuantity = async (cartItemId: number, quantity: number) => {
+    try {
+        await axiosInstance.put(`api/ShoppingCarts/${cartItemId}`, { quantity });
+    } catch (error) {
+        console.error('Error updating cart item quantity:', error);
+        throw error;
+    }
+};

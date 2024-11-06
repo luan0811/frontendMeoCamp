@@ -135,7 +135,7 @@ const ProductDetail = () => {
             </div> */}
 
             {/* Mua hoặc Thuê */}
-            {product.isRentable && (
+            {/* {product.isRentable && ( */}
               <div className="product-buy-rent">
                 {/* <Radio.Group onChange={(e) => setRentDuration(e.target.value)} value={rentDuration}>
                   <Radio.Button value={1}>1 ngày</Radio.Button>
@@ -152,7 +152,7 @@ const ProductDetail = () => {
                   </Button>
                 </div>
               </div>
-            )}
+            {/* )} */}
           </div>
         </Col>
       </Row>
