@@ -19,13 +19,87 @@ import AdminGetAllUsers from "../pages/Admin/AdminGetAllUsers";
 import AdminManageBlog from "../pages/Admin/AdminManageBlog";
 import AdminManageOrders from "../pages/Admin/AdminManageOrders";
 import AdminManageContact from "../pages/Admin/AdminManageContact";
+import ProtectedRoute from './protect';
+
 const AppRouter = () => {
   return (
     <Router>
       <Routes>
-        {/* Các trang không có Layout */}
+        {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+        {/* Protected admin routes */}
+        <Route
+          path="/admin/add-product"
+          element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <Layout>
+                <AdminAddProduct />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/manage-products"
+          element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <Layout>
+                <AdminGetAllProduct />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/manage-products/update/:id"
+          element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <Layout>
+                <AdminUpdateProduct />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/manage-users"
+          element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <Layout>
+                <AdminGetAllUsers />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/manage-blogs"
+          element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <Layout>
+                <AdminManageBlog />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/manage-orders"
+          element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <Layout>
+                <AdminManageOrders />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/manage-contact"
+          element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <Layout>
+                <AdminManageContact />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
 
         {/* Các trang có Layout */}
         <Route
@@ -105,64 +179,6 @@ const AppRouter = () => {
           element={
             <Layout>
               <AddBlog />
-            </Layout>
-          }
-        />
-
-        {/* admin */}
-        <Route
-          path="/admin/add-product"
-          element={
-            <Layout>
-              <AdminAddProduct />
-            </Layout>
-          }
-        />
-        <Route
-          path="/admin/manage-products"
-          element={
-            <Layout>
-              <AdminGetAllProduct />
-            </Layout>
-          }
-        />
-        <Route
-          path="/admin/manage-products/update/:id"
-          element={
-            <Layout>
-              <AdminUpdateProduct />
-            </Layout>
-          }
-        />
-        <Route
-          path="/admin/manage-users"
-          element={
-            <Layout>
-              <AdminGetAllUsers />
-            </Layout>
-          }
-        />
-        <Route
-          path="/admin/manage-blogs"
-          element={
-            <Layout>
-              <AdminManageBlog />
-            </Layout>
-          }
-        />
-        <Route
-          path="/admin/manage-orders"
-          element={
-            <Layout>
-              <AdminManageOrders />
-            </Layout>
-          }
-        />
-        <Route
-          path="/admin/manage-contact"
-          element={
-            <Layout>
-              <AdminManageContact />
             </Layout>
           }
         />
