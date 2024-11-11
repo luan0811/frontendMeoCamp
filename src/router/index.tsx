@@ -19,6 +19,7 @@ import AdminGetAllUsers from "../pages/Admin/AdminGetAllUsers";
 import AdminManageBlog from "../pages/Admin/AdminManageBlog";
 import AdminManageOrders from "../pages/Admin/AdminManageOrders";
 import AdminManageContact from "../pages/Admin/AdminManageContact";
+import OrderDetail from "../pages/Admin/OrderDetail";
 import ProtectedRoute from './protect';
 
 const AppRouter = () => {
@@ -96,6 +97,16 @@ const AppRouter = () => {
             <ProtectedRoute allowedRoles={['Admin']}>
               <Layout>
                 <AdminManageContact />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/order-detail/:id"
+          element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <Layout>
+                <OrderDetail />
               </Layout>
             </ProtectedRoute>
           }

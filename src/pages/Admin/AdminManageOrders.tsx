@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Tag, message, Button, Space } from 'antd';
-import { getAllOrders, OrderResponse, updateOrderStatus } from '../../services/OrderServices';
+import { OrderResponse, updateOrderStatus, getOrdersWithCustomerInfo } from '../../services/OrderServices';
+import { useNavigate } from 'react-router-dom';
 
 const AdminManageOrders: React.FC = () => {
-    const [orders, setOrders] = useState<OrderResponse[]>([]);
+    const [orders, setOrders] = useState<(OrderResponse & { username: string })[]>([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchOrders();
@@ -13,7 +15,7 @@ const AdminManageOrders: React.FC = () => {
     const fetchOrders = async () => {
         try {
             setLoading(true);
-            const data = await getAllOrders();
+            const data = await getOrdersWithCustomerInfo();
             setOrders(data);
         } catch (error) {
             console.error('Error fetching orders:', error);
@@ -41,9 +43,12 @@ const AdminManageOrders: React.FC = () => {
             key: 'id',
         },
         {
-            title: 'Khách hàng ID',
+            title: 'Khách hàng',
             dataIndex: 'customerId',
             key: 'customerId',
+            render: (_: any, record: OrderResponse & { username: string }) => (
+                <span>{record.username}</span>
+            ),
         },
         {
             title: 'Ngày đặt hàng',
@@ -68,7 +73,7 @@ const AdminManageOrders: React.FC = () => {
             ),
         },
         {
-            title: 'Duyệt bài',
+            title: 'Thao tác',
             key: 'action',
             render: (_: any, record: OrderResponse) => (
                 <Space>
@@ -83,8 +88,11 @@ const AdminManageOrders: React.FC = () => {
                         </>
                     )}
                     {record.orderStatus !== 'Pending' && (
-                        <span>Đã {record.orderStatus === 'Approved' ? 'duyệt' : 'từ chối'}</span>
+                        <span>Đã {record.orderStatus === 'Approved' ? 'duyệt' : record.orderStatus === 'Delivered' ? 'Đã giao hàng' : 'từ chối'}</span>
                     )}
+                    <Button type="link" onClick={() => navigate(`/admin/order-detail/${record.id}`)}>
+                        Xem chi tiết
+                    </Button>
                 </Space>
             ),
         },
