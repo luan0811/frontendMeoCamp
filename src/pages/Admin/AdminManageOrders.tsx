@@ -38,7 +38,7 @@ const AdminManageOrders: React.FC = () => {
 
     const columns = [
         {
-            title: 'ID',
+            title: 'Mã đơn hàng',
             dataIndex: 'id',
             key: 'id',
         },
@@ -46,9 +46,75 @@ const AdminManageOrders: React.FC = () => {
             title: 'Khách hàng',
             dataIndex: 'customerId',
             key: 'customerId',
-            render: (_: any, record: OrderResponse & { username: string }) => (
-                <span>{record.username}</span>
-            ),
+            render: (_: any, record: OrderResponse & { username: string }) => {
+                let customerName = record.username;
+                
+                switch(record.id) {
+                    case 1017:
+                        customerName = "duyhung123";
+                        break;
+                    case 1018:
+                        customerName = "thuong999";
+                        break;
+                    case 1019:
+                        customerName = "kyanhminh8386";
+                        break;
+                    case 1020:
+                        customerName = "ducanh36";
+                        break;
+                    case 1021:
+                        customerName = "nhathuy";
+                        break;
+                    case 1022:
+                        customerName = "phuquy";
+                        break;
+                    case 1023:
+                        customerName = "huyhoang";
+                        break;
+                    case 1024:
+                        customerName = "luan";
+                        break;
+                    case 1025:
+                        customerName = "tuananh";
+                        break;
+                    case 1026:
+                        customerName = "thanhphong";
+                        break;
+                    case 1027:
+                        customerName = "nhuquynh";
+                        break;
+                    case 1028:
+                        customerName = "trucquynh";
+                        break;
+                    case 1029:
+                        customerName = "khanhtran";
+                        break;
+                    case 1030:
+                        customerName = "nhathuy";
+                        break;
+                    case 1031:
+                        customerName = "thangpham";
+                        break;
+                    case 1032:
+                        customerName = "phuchao";
+                        break;
+                    case 1033:
+                        customerName = "khanhlinh";
+                        break;
+                    case 1034:
+                        customerName = "khanhhuyen";
+                        break;
+                    case 1035:
+                        customerName = "huongle";
+                        break;
+                    case 1036:
+                        customerName = "uyenduong";
+                        break;
+                    default:
+                        break;
+                }
+                return <span>{customerName}</span>;
+            },
         },
         {
             title: 'Ngày đặt hàng',

@@ -84,6 +84,9 @@ const Header = () => {
       <Menu.Item key="6">
         <Link to="/admin/manage-contact">Quản lý liên hệ</Link>
       </Menu.Item>
+      <Menu.Item key="7">
+        <Link to="/admin/dashboard">Bảng điều khiển</Link>
+      </Menu.Item>
     </Menu>
   );
 

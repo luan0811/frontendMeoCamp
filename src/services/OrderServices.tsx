@@ -130,3 +130,48 @@ export const getOrderWithCustomerInfo = async (orderId: number): Promise<Custome
     throw error;
   }
 };
+
+export const getMonthlyRevenue = (orders: OrderResponse[]) => {
+    const monthlyData = Array(31).fill(0); // Mảng 31 ngày, giá trị ban đầu = 0
+    
+    orders.forEach(order => {
+        const date = new Date(order.orderDate);
+        const day = date.getDate();
+        monthlyData[day - 1] += order.totalAmount;
+    });
+    
+    return monthlyData;
+};
+
+export const getTotalRevenue = (orders: OrderResponse[]) => {
+    return orders.reduce((total, order) => total + order.totalAmount, 0);
+};
+
+export const getOrdersByStatus = (orders: OrderResponse[]) => {
+    return {
+        pending: orders.filter(order => order.orderStatus === 'Pending').length,
+        approved: orders.filter(order => order.orderStatus === 'Approved').length,
+        rejected: orders.filter(order => order.orderStatus === 'Rejected').length,
+        delivered: orders.filter(order => order.orderStatus === 'Delivered').length
+    };
+};
+
+export const getRevenueByMonths = (orders: OrderResponse[], year: number) => {
+    // Tạo mảng 12 tháng, mỗi tháng có 31 ngày
+    const monthlyData = Array(12).fill(null).map(() => ({
+        month: 0,
+        data: Array(31).fill(0)
+    }));
+
+    orders.forEach(order => {
+        const date = new Date(order.orderDate);
+        if (date.getFullYear() === year) {
+            const month = date.getMonth();
+            const day = date.getDate();
+            monthlyData[month].month = month + 1;
+            monthlyData[month].data[day - 1] += order.totalAmount;
+        }
+    });
+
+    return monthlyData;
+};

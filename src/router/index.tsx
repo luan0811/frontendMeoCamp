@@ -21,7 +21,7 @@ import AdminManageOrders from "../pages/Admin/AdminManageOrders";
 import AdminManageContact from "../pages/Admin/AdminManageContact";
 import OrderDetail from "../pages/Admin/OrderDetail";
 import ProtectedRoute from './protect';
-
+import DashBoard from "../pages/Admin/DashBoard";
 const AppRouter = () => {
   return (
     <Router>
@@ -107,6 +107,16 @@ const AppRouter = () => {
             <ProtectedRoute allowedRoles={['Admin']}>
               <Layout>
                 <OrderDetail />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={['Admin']}>
+              <Layout>
+                <DashBoard />
               </Layout>
             </ProtectedRoute>
           }
