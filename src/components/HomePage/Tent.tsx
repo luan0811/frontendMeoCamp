@@ -116,7 +116,7 @@ const Tent = () => {
                 <Title level={4} style={{ marginBottom: '10px', color: '#fff', fontSize: '1.2rem' }}>
                   {product.productName}
                 </Title>
-                <p style={{ marginBottom: '15px', color: '#f90', fontSize: '1.1rem', fontWeight: 'bold' }}>{product.rentalPrice} VND/ngày</p>
+                <p style={{ marginBottom: '15px', color: '#f90', fontSize: '1.1rem', fontWeight: 'bold' }}>{product.price} VND</p>
                 <Button type="primary" style={{ backgroundColor: '#f90', borderColor: '#f90', borderRadius: '20px', padding: '0 25px' }}>
                   <Link to={`/product/${product.id}`} style={{ color: '#fff' }}>Xem chi tiết</Link>
                 </Button>

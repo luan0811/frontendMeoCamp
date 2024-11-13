@@ -9,10 +9,10 @@ interface ProductCardProps {
   id: number; // Add id as a prop for routing
   image: string;
   name: string;
-  rent_price: number;
+  price: number;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ id, image, name, rent_price }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ id, image, name, price }) => {
   return (
     <Card
       hoverable
@@ -41,7 +41,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, image, name, rent_price }
         fontSize: '1.1rem',
         fontWeight: 'bold'
       }}>
-        {rent_price} VND/ngày
+        {price} VND
       </Text>
 
       {/* Link to Product Detail page */}

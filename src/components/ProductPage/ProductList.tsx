@@ -30,7 +30,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, loading }) => {
                   id={product.id.toString()}
                   name={product.productName}
                   image={firstImage}
-                  rentPrice={product.rentalPrice}
+                  price={product.price}
                 />
               </Col>
             );

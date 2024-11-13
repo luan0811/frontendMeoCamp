@@ -8,10 +8,10 @@ interface ProductCardProps {
   id: string;
   name: string;
   image: string;
-  rentPrice: number;
+  price: number;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ id,name, image, rentPrice }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ id,name, image, price }) => {
   return (
     <Card
       hoverable
@@ -22,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id,name, image, rentPrice }) 
       <Title level={4} style={{ marginBottom: '10px', color: '#fff' }}>
         {name}
       </Title>
-      <p style={{ marginBottom: '10px', color: '#fff' }}>{rentPrice} VND/ngày</p>
+      <p style={{ marginBottom: '10px', color: '#fff' }}>{price} VND</p>
       <Button type="primary" style={{ backgroundColor: '#f90', borderColor: '#f90' }}>
         <Link to={`/product/${id}`}>Xem chi tiết</Link>
       </Button>

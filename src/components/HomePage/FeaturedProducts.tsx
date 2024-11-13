@@ -66,7 +66,7 @@ const FeaturedProducts = () => {
                 id={product.id} 
                 image={getFirstImage(product.images)} 
                 name={product.productName} 
-                rent_price={product.rentalPrice} 
+                price={product.price} 
               />
             </Col>
           ))}
