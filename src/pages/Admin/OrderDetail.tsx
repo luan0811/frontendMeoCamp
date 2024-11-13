@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Card, Descriptions, Tag, Button, Spin, message } from 'antd';
 import { getOrderWithCustomerInfo } from '../../services/OrderServices';
+import { fakeData } from '../../services/FakeData';
 
 const OrderDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -29,9 +30,11 @@ const OrderDetail: React.FC = () => {
     if (loading) return <Spin size="large" />;
     if (!order) return <div>Không tìm thấy đơn hàng</div>;
 
+    const product = fakeData.product.find(p => p.id === order.id);
+
     return (
         <div style={{ padding: '70px' }}>
-            <Button onClick={() => navigate('/admin/orders')} style={{ marginBottom: 16 }}>
+            <Button onClick={() => navigate('/admin/manage-orders')} style={{ marginBottom: 16 }}>
                 Quay lại
             </Button>
             
@@ -57,6 +60,11 @@ const OrderDetail: React.FC = () => {
                         }>
                             {order.orderStatus}
                         </Tag>
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Mã sản phẩm">{product?.subid.join(', ') || 'Không xác định'}</Descriptions.Item>
+                    <Descriptions.Item label="Tên sản phẩm">{product?.name.join(', ') || 'Không xác định'}</Descriptions.Item>
+                    <Descriptions.Item label="Giá từng sản phẩm">
+                        {product?.price.map(price => price.toLocaleString('vi-VN') + ' VND').join(', ') || 'Không xác định'}
                     </Descriptions.Item>
                 </Descriptions>
             </Card>
