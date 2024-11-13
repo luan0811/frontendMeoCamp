@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Statistic, Select, DatePicker } from 'antd';
+import { useState, useEffect } from 'react';
+import { Card, Row, Col, Statistic, Select } from 'antd';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { getOrdersWithCustomerInfo, getRevenueByMonths, getTotalRevenue, getOrdersByStatus } from '../../services/OrderServices';
 
