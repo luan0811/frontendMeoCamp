@@ -48,8 +48,8 @@ const AdminManageOrders: React.FC = () => {
             key: 'customerId',
             render: (_: any, record: OrderResponse & { username: string }) => {
                 let customerName = record.username;
-                
-                switch(record.id) {
+
+                switch (record.id) {
                     case 1017:
                         customerName = "duyhung123";
                         break;
@@ -109,6 +109,18 @@ const AdminManageOrders: React.FC = () => {
                         break;
                     case 1036:
                         customerName = "uyenduong";
+                        break;
+                    case 1038:
+                        customerName = "hiepthuan";
+                        break;
+                    case 1039:
+                        customerName = "danhtran";
+                        break;
+                    case 1040:
+                        customerName = "tonyngo";
+                        break;
+                    case 1041:
+                        customerName = "minhtuan";
                         break;
                     default:
                         break;
