@@ -103,7 +103,12 @@ const DashBoard = () => {
                 </Col>
                 <Col span={6}>
                     <Card>
-                        <Statistic title="Đơn đã duyệt" value={orderStats.approved + orderStats.delivered} />
+                        <Statistic title="Đơn đã duyệt" value={orderStats.approved} />
+                    </Card>
+                </Col>
+                <Col span={6}>
+                    <Card>
+                        <Statistic title="Đơn đã giao" value={orderStats.delivered} />
                     </Card>
                 </Col>
                 <Col span={6}>

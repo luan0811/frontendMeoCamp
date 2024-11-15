@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Tag, message, Button, Space } from 'antd';
+import { Table, Tag, message, Button, Space, Input } from 'antd';
 import { OrderResponse, updateOrderStatus, getOrdersWithCustomerInfo } from '../../services/OrderServices';
 import { useNavigate } from 'react-router-dom';
+
+const { Search } = Input;
 
 const AdminManageOrders: React.FC = () => {
     const [orders, setOrders] = useState<(OrderResponse & { username: string })[]>([]);
     const [loading, setLoading] = useState(true);
+    const [searchText, setSearchText] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,6 +38,90 @@ const AdminManageOrders: React.FC = () => {
             message.error('Không thể cập nhật trạng thái đơn hàng');
         }
     };
+
+    const filteredOrders = orders.filter(order => {
+        let customerName = '';
+        
+        switch (order.id) {
+            case 1017:
+                customerName = "duyhung123";
+                break;
+            case 1018:
+                customerName = "thuong999";
+                break;
+            case 1019:
+                customerName = "kyanhminh8386";
+                break;
+            case 1020:
+                customerName = "ducanh36";
+                break;
+            case 1021:
+                customerName = "nhathuy";
+                break;
+            case 1022:
+                customerName = "phuquy";
+                break;
+            case 1023:
+                customerName = "huyhoang";
+                break;
+            case 1024:
+                customerName = "luan";
+                break;
+            case 1025:
+                customerName = "tuananh";
+                break;
+            case 1026:
+                customerName = "thanhphong";
+                break;
+            case 1027:
+                customerName = "nhuquynh";
+                break;
+            case 1028:
+                customerName = "trucquynh";
+                break;
+            case 1029:
+                customerName = "khanhtran";
+                break;
+            case 1030:
+                customerName = "nhathuy";
+                break;
+            case 1031:
+                customerName = "thangpham";
+                break;
+            case 1032:
+                customerName = "phuchao";
+                break;
+            case 1033:
+                customerName = "khanhlinh";
+                break;
+            case 1034:
+                customerName = "khanhhuyen";
+                break;
+            case 1035:
+                customerName = "huongle";
+                break;
+            case 1036:
+                customerName = "uyenduong";
+                break;
+            case 1038:
+                customerName = "hiepthuan";
+                break;
+            case 1039:
+                customerName = "danhtran";
+                break;
+            case 1040:
+                customerName = "tonyngo";
+                break;
+            case 1041:
+                customerName = "minhtuan";
+                break;
+            default:
+                customerName = order.username;
+                break;
+        }
+        
+        return customerName.toLowerCase().includes(searchText.toLowerCase());
+    });
 
     const columns = [
         {
@@ -179,9 +266,19 @@ const AdminManageOrders: React.FC = () => {
     return (
         <div style={{ padding: '70px' }}>
             <h1>Quản lý đơn hàng</h1>
+            <div style={{ marginBottom: '20px' }}>
+                <Search
+                    placeholder="Tìm kiếm theo tên khách hàng"
+                    allowClear
+                    enterButton="Tìm kiếm"
+                    size="large"
+                    onSearch={(value) => setSearchText(value)}
+                    style={{ width: 300 }}
+                />
+            </div>
             <Table
                 columns={columns}
-                dataSource={orders}
+                dataSource={filteredOrders}
                 rowKey="id"
                 loading={loading}
                 pagination={{ pageSize: 10 }}
