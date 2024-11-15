@@ -61,91 +61,79 @@ export const fakeData = {
     },
     {
         id: 1027,
-        subid: [41, 42, 43],
+        subid: [31, 32, 33],
         name: ['Lều 4 mùa', 'Túi ngủ cao cấp', 'Đèn năng lượng'],
         price: [500000, 300000, 150000] // 500k + 300k + 150k = 950k
     },
     {
         id: 1028,
-        subid: [44, 45, 46],
+        subid: [14, 15, 16],
         name: ['Bếp mini', 'Nồi cắm trại', 'Bát đũa gấp gọn'],
         price: [300000, 250000, 150000] // 300k + 250k + 150k = 700k
     },
     {
         id: 1029,
-        subid: [47, 48, 49],
+        subid: [17, 18, 19],
         name: ['Lều tự bung', 'Ghế xếp cao cấp', 'Đèn đội đầu'],
         price: [500000, 300000, 200000] // 500k + 300k + 200k = 1000k
     },
     {
         id: 1030,
-        subid: [50, 51, 52],
+        subid: [20, 21, 22],
         name: ['Túi đeo chéo', 'Ống nhòm', 'Găng tay leo núi'],
         price: [250000, 200000, 110000] // 250k + 200k + 110k = 560k
     },
     {
         id: 1031,
-        subid: [53, 54, 55],
+        subid: [23, 24, 25],
         name: ['Áo chống nắng', 'Mũ bảo hộ', 'Còi sinh tồn'],
         price: [200000, 160000, 100000] // 200k + 160k + 100k = 460k
     },
     {
         id: 1032,
-        subid: [56, 57, 58],
+        subid: [26, 27, 28],
         name: ['Lều cắm trại mini', 'Ba lô 40L', 'Đèn cắm trại'],
         price: [400000, 300000, 200000] // 400k + 300k + 200k = 900k
     },
     {
         id: 1033,
-        subid: [59, 60, 61],
+        subid: [29, 30, 31],
         name: ['Lều gia đình', 'Túi ngủ đôi', 'Bàn xếp'],
         price: [500000, 300000, 200000] // 500k + 300k + 200k = 1000k
     },
     {
         id: 1034,
-        subid: [62, 63, 64],
+        subid: [32, 33, 34],
         name: ['Võng dù', 'Bạt cắm trại', 'Dao đa năng'],
         price: [300000, 250000, 150000] // 300k + 250k + 150k = 700k
     },
     {
         id: 1035,
-        subid: [65, 66, 67],
+        subid: [35, 36, 37],
         name: ['Lều du lịch', 'Túi bảo quản', 'Đèn sạc'],
         price: [400000, 250000, 150000] // 400k + 250k + 150k = 800k
     },
     {
-        id: 1036,
-        subid: [68, 69, 70],
-        name: ['Lều cắm trại nhẹ', 'Túi ngủ nhẹ', 'Bếp cồn'],
-        price: [350000, 300000, 150000] // 350k + 300k + 150k = 800k
-    },
-    {
-        id: 1037,
-        subid: [71, 72, 73],
-        name: ['Đèn cắm trại mini', 'Bình lọc nước', 'Dây phơi đồ'],
-        price: [250000, 200000, 100000] // 250k + 200k + 100k = 550k
-    },
-    {
         id: 1038,
-        subid: [74],
+        subid: [14],
         name: ['Bộ lều cắm trại tự động'],
         price: [540000] // 540k
     },
     {
         id: 1039,
-        subid: [77, 78],
+        subid: [17, 18],
         name: ['Lều cắm trại 2 người', 'Bộ dụng cụ dã ngoại'],
         price: [400000, 300000] // 400k + 300k = 700k
     },
     {
         id: 1040,
-        subid: [80, 81],
+        subid: [20, 21],
         name: ['Bếp gas mini kèm nồi', 'Bộ bát đũa cao cấp'],
         price: [480000, 200000] // 480k + 200k = 680k
     },
     {
         id: 1041,
-        subid: [83],
+        subid: [23],
         name: ['Bộ lều du lịch đa năng'],
         price: [800000] // 800k
     }]
