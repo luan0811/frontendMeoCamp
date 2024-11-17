@@ -48,7 +48,7 @@ const Footer = () => {
               <FacebookOutlined style={{ fontSize: "24px", color: "#fff" }} />
             </Link>
             <Link
-              to="https://www.tiktok.com/@mo.camp0"
+              to="https://www.tiktok.com/@meocamp"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -59,7 +59,7 @@ const Footer = () => {
         <Col xs={24} md={8} style={{ textAlign: "center" }}>
           <h3 style={{ color: "#fff", marginBottom: 16 }}>Chính sách</h3>
           <Space direction="vertical" size="middle">
-            <Link to="/blog" style={{ color: "#fff" }}>
+            <Link to="/blogs" style={{ color: "#fff" }}>
               Blog
             </Link>
             <Link to="/privacy-policy" style={{ color: "#fff" }}>
